@@ -3,7 +3,6 @@ import { createClimate } from './climate'
 
 export const CURRENT_USER = 'Thomas Peeters'
 export const DEMO_CODE = '2580'
-export const DOOR_NAME = "porte d'entrée"
 
 export type AlarmMode = 'off' | 'partial' | 'total'
 
@@ -58,14 +57,14 @@ export function createSeed(now = Date.now()) {
   }
 }
 
-export const CAMERAS = ['salon', 'hall de nuit']
+/** Identifiants des caméras ; les noms affichés sont dans les dictionnaires (cameras.names). */
+export const CAMERAS = ['living', 'nightHall'] as const
 
-export const HOME_ADDRESS = 'Rue des Tilleuls'
-
-export type Sensor = { name: string; serial: string; at: number }
+export type SensorId = 'bathroom' | 'living' | 'livingLeft' | 'slidingDoor' | 'hall' | 'toilet'
+export type Sensor = { id: SensorId; serial: string; at: number }
 
 /**
- * Capteurs d'ouverture (noms de la capture, numéros de série fictifs).
+ * Capteurs d'ouverture (noms traduits via doorsWindows.sensors, numéros de série fictifs).
  * `daysAgo` + heure fixe ; la baie vitrée porte le dernier changement, affiché sur la carte de l'Accueil.
  */
 export function createSensors(doorsWindowsAt: number, now = Date.now()): Sensor[] {
@@ -76,11 +75,11 @@ export function createSensors(doorsWindowsAt: number, now = Date.now()): Sensor[
     return d.getTime()
   }
   return [
-    { name: 'Fenêtre salle de bain', serial: '3SX9 KQ2M', at: at(67, 17, 59) },
-    { name: 'Fenêtre salon', serial: '2DWJ RT7P', at: at(356, 9, 12) },
-    { name: 'Fenêtre salon gauche', serial: '3SXA LM4D', at: at(105, 8, 59) },
-    { name: 'baie vitrée', serial: '2DWJ B8VN', at: doorsWindowsAt },
-    { name: 'fenêtre hall', serial: '2DWJ GH3K', at: at(103, 6, 51) },
-    { name: 'fenêtre toilette', serial: '2KG3 PW5T', at: at(203, 14, 41) },
+    { id: 'bathroom', serial: '3SX9 KQ2M', at: at(67, 17, 59) },
+    { id: 'living', serial: '2DWJ RT7P', at: at(356, 9, 12) },
+    { id: 'livingLeft', serial: '3SXA LM4D', at: at(105, 8, 59) },
+    { id: 'slidingDoor', serial: '2DWJ B8VN', at: doorsWindowsAt },
+    { id: 'hall', serial: '2DWJ GH3K', at: at(103, 6, 51) },
+    { id: 'toilet', serial: '2KG3 PW5T', at: at(203, 14, 41) },
   ]
 }

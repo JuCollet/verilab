@@ -6,7 +6,8 @@ const STEP = HOUR / 2
 export type ClimatePoint = { at: number; temperature: number; humidity: number }
 
 export type ClimateRoom = {
-  room: string
+  /** Identifiant ; le nom affiché est dans les dictionnaires (climate.rooms). */
+  room: 'garage' | 'attic'
   at: number
   temperature: number
   humidity: number
@@ -98,6 +99,6 @@ export function createClimate(now = Date.now()): ClimateRoom[] {
   const grenier = { temperature: 17.7, humidity: 86 }
   return [
     { room: 'garage', at: minutesAgo(43, now), ...garage, axis: [15, 22], series: buildSeries(from, now, garageModel, 7, garage) },
-    { room: 'grenier', at: minutesAgo(40, now), ...grenier, axis: [13, 24], series: buildSeries(from, now, grenierModel, 11, grenier) },
+    { room: 'attic', at: minutesAgo(40, now), ...grenier, axis: [13, 24], series: buildSeries(from, now, grenierModel, 11, grenier) },
   ]
 }

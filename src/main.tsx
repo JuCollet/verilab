@@ -9,15 +9,18 @@ import './index.css'
 import { router } from './router'
 import { DesktopGate } from './components/DesktopGate'
 import { DemoProvider } from './store/demoStore'
+import { I18nProvider } from './i18n/I18nProvider'
 
 registerSW({ immediate: true })
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <DemoProvider>
-      <DesktopGate>
-        <RouterProvider router={router} />
-      </DesktopGate>
-    </DemoProvider>
+    <I18nProvider>
+      <DemoProvider>
+        <DesktopGate>
+          <RouterProvider router={router} />
+        </DesktopGate>
+      </DemoProvider>
+    </I18nProvider>
   </StrictMode>,
 )

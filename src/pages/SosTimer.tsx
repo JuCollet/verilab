@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Crosshair, Minus, Plus } from 'lucide-react'
 import { FakeMap } from '../components/icons/FakeMap'
+import { useI18n } from '../i18n/I18nProvider'
 
 const STEP = 5 * 60_000
 const MIN = STEP
@@ -17,6 +18,7 @@ type Phase = { kind: 'setup' } | { kind: 'running'; endAt: number } | { kind: 'd
  */
 export function SosTimer() {
   const navigate = useNavigate()
+  const { t } = useI18n()
   const close = () => navigate('/', { replace: true })
   const [duration, setDuration] = useState(DEFAULT)
   const [activity, setActivity] = useState('')
@@ -27,9 +29,9 @@ export function SosTimer() {
     <div className="pt-safe relative mx-auto flex h-dvh max-w-[600px] flex-col overflow-hidden bg-bg">
       <header className="relative flex h-[40px] shrink-0 items-center justify-center border-b border-line bg-bg">
         <button type="button" onClick={close} className="absolute left-[18px] text-[14px] font-medium text-brand">
-          FERMER
+          {t.common.close}
         </button>
-        <h1 className="text-[16px] font-medium text-ink">Protection personnelle</h1>
+        <h1 className="text-[16px] font-medium text-ink">{t.sosTimer.title}</h1>
       </header>
       <div className="relative flex-1">
         <div className="absolute inset-0">
@@ -55,12 +57,12 @@ export function SosTimer() {
         )}
         {phase.kind === 'running' && (
           <Sheet
-            title="Timer en cours"
+            title={t.sosTimer.running}
             footer={
               <>
-                <FooterButton onClick={() => setPhase({ kind: 'running', endAt: phase.endAt + STEP })}>+5 MIN</FooterButton>
+                <FooterButton onClick={() => setPhase({ kind: 'running', endAt: phase.endAt + STEP })}>{t.sosTimer.plus5}</FooterButton>
                 <FooterButton red onClick={() => setPhase({ kind: 'setup' })}>
-                  ARRÊTER LE TIMER
+                  {t.sosTimer.stop}
                 </FooterButton>
               </>
             }
@@ -73,11 +75,11 @@ export function SosTimer() {
           </Sheet>
         )}
         {phase.kind === 'done' && (
-          <Sheet title="Temps écoulé" footer={<FooterButton red onClick={close}>FERMER</FooterButton>}>
+          <Sheet title={t.sosTimer.done} footer={<FooterButton red onClick={close}>{t.common.close}</FooterButton>}>
             <div className="flex h-[211px] flex-col items-center justify-center px-8 text-center">
               <span className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-sos text-[20px] text-white shadow-round">SOS</span>
-              <p className="mt-[14px] text-[16px] leading-[22px] text-ink">Un SOS aurait été envoyé à la centrale.</p>
-              <p className="mt-[4px] text-[13px] text-muted">Démo : aucune alerte réelle n'a été déclenchée.</p>
+              <p className="mt-[14px] text-[16px] leading-[22px] text-ink">{t.sosTimer.doneMessage}</p>
+              <p className="mt-[4px] text-[13px] text-muted">{t.sosTimer.demoNote}</p>
             </div>
           </Sheet>
         )}
@@ -112,25 +114,26 @@ function SetupSheet(props: {
   const { duration, setDuration, activity, setActivity, onCancel, onStart } = props
   const canDecrease = duration > MIN
   const isDefault = duration === DEFAULT
+  const { t } = useI18n()
   return (
     <Sheet
-      title="Définir le Timer"
+      title={t.sosTimer.setTimer}
       footer={
         <>
-          <FooterButton onClick={onCancel}>ANNULER</FooterButton>
+          <FooterButton onClick={onCancel}>{t.common.cancel}</FooterButton>
           <FooterButton red onClick={onStart}>
-            DÉMARRER LE TIMER
+            {t.sosTimer.start}
           </FooterButton>
         </>
       }
     >
       <div className="flex flex-col items-center pt-[30px]">
         <div className="flex items-center gap-[24px]">
-          <RoundButton label="Retirer 5 minutes" disabled={!canDecrease} onClick={() => setDuration(Math.max(MIN, duration - STEP))}>
+          <RoundButton label={t.sosTimer.remove5} disabled={!canDecrease} onClick={() => setDuration(Math.max(MIN, duration - STEP))}>
             <Minus size={16} strokeWidth={3} />
           </RoundButton>
           <Digits ms={duration} />
-          <RoundButton label="Ajouter 5 minutes" disabled={duration >= MAX} onClick={() => setDuration(Math.min(MAX, duration + STEP))}>
+          <RoundButton label={t.sosTimer.add5} disabled={duration >= MAX} onClick={() => setDuration(Math.min(MAX, duration + STEP))}>
             <Plus size={16} strokeWidth={3} />
           </RoundButton>
         </div>
@@ -140,7 +143,7 @@ function SetupSheet(props: {
           onClick={() => setDuration(DEFAULT)}
           className={`mt-[6px] h-[24px] text-[14px] font-medium tracking-[0.02em] ${isDefault ? 'text-brand-soft' : 'text-brand'}`}
         >
-          EFFACER
+          {t.sosTimer.clear}
         </button>
       </div>
       <label className="mx-[14px] mt-[28px] block">
@@ -148,11 +151,11 @@ function SetupSheet(props: {
           value={activity}
           onChange={(e) => setActivity(e.target.value.slice(0, MAX_ACTIVITY))}
           maxLength={MAX_ACTIVITY}
-          placeholder="Dites-nous en plus sur votre activité"
+          placeholder={t.sosTimer.activity}
           className="h-[44px] w-full border-b-[1.5px] border-[#6e6e6e] bg-transparent px-[13px] text-[16px] text-ink outline-none placeholder:text-muted focus:border-brand"
         />
         <span className="mt-[6px] flex justify-between px-[4px] text-[13px] text-muted">
-          <span>Max {MAX_ACTIVITY} caractères</span>
+          <span>{t.sosTimer.maxChars(MAX_ACTIVITY)}</span>
           {activity && (
             <span>
               {activity.length}/{MAX_ACTIVITY}

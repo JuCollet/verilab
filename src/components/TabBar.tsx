@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router'
 import { CircleHelp, Ellipsis, House } from 'lucide-react'
+import { useI18n } from '../i18n/I18nProvider'
 
 /** Routes affichées sous l'onglet Accueil. */
 const HOME_PATHS = ['/', '/portes-fenetres', '/climat']
@@ -48,18 +49,19 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function TabBar() {
   const homeActive = HOME_PATHS.includes(useLocation().pathname)
+  const { t } = useI18n()
   return (
     <nav className="pb-safe shrink-0 border-t border-line bg-card">
       <div className="flex h-[58px] text-[13px] tracking-[0.02em]">
         <NavLink to="/" className={linkClass({ isActive: homeActive })}>
           <HomeTabIcon active={homeActive} />
-          Accueil
+          {t.tabs.home}
         </NavLink>
         <NavLink to="/cameras" className={linkClass}>
           {({ isActive }) => (
             <>
               <CameraTabIcon active={isActive} />
-              Caméras
+              {t.tabs.cameras}
             </>
           )}
         </NavLink>
@@ -67,17 +69,17 @@ export function TabBar() {
           {({ isActive }) => (
             <>
               <HistoryTabIcon active={isActive} />
-              Historique
+              {t.tabs.history}
             </>
           )}
         </NavLink>
         <span aria-disabled="true" className="flex flex-1 flex-col items-center gap-[3px] pt-[9px] text-ink opacity-40">
           <CircleHelp size={22} strokeWidth={1.6} />
-          Support
+          {t.tabs.support}
         </span>
         <span aria-disabled="true" className="flex flex-1 flex-col items-center gap-[3px] pt-[9px] text-ink opacity-40">
           <Ellipsis size={22} strokeWidth={2.4} />
-          Plus
+          {t.tabs.more}
         </span>
       </div>
     </nav>

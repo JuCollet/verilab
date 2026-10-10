@@ -1,0 +1,259 @@
+import type { EventType } from '../store/seed'
+
+/** Textes de date/heure, utilisés par lib/time. */
+export type TimeStrings = {
+  locale: string
+  ago: (value: number, unit: 'min' | 'h' | 'd') => string
+  today: string
+  yesterday: string
+  months: string[]
+}
+
+const fr = {
+  time: {
+    locale: 'fr-FR',
+    ago: (value, unit) => `IL Y A ${value} ${{ min: 'MIN', h: 'H', d: 'J' }[unit]}`,
+    today: "AUJOURD'HUI",
+    yesterday: 'HIER',
+    months: ['JANV', 'FÉVR', 'MAR', 'AVR', 'MAI', 'JUIN', 'JUIL', 'AOÛT', 'SEPT', 'OCT', 'NOV', 'DÉC'],
+  } satisfies TimeStrings,
+  common: { cancel: 'ANNULER', close: 'FERMER', back: 'Retour' },
+  alarm: {
+    off: 'Désactivé',
+    partial: 'Activé partiellement',
+    total: 'Activé totalement',
+    arming: 'Activation…',
+    disarming: 'Désactivation…',
+    change: "Changer le mode de l'alarme",
+  },
+  tabs: { home: 'Accueil', cameras: 'Caméras', history: 'Historique', support: 'Support', more: 'Plus' },
+  home: {
+    locks: 'Serrures intelligentes',
+    learnMore: 'En savoir plus',
+    lockDoor: 'Verrouiller la porte',
+    unlockDoor: 'Déverrouiller la porte',
+    fire: 'Sécurité incendie',
+    deviceStatus: "Statut de l'appareil",
+    allGood: 'TOUS BONS',
+    fireDrill: "Exercice d'incendie",
+    startNow: 'COMMENCER MAINTENANT',
+    guardian: 'Verilab Guardian',
+    triggerSos: 'Déclencher un SOS',
+    sosHelp: 'Utilisez une carte ou un Timer pour envoyer automatiquement un SOS si nécessaire',
+    sosTimer: 'SOS TIMER / DESTINATION',
+    doorsWindows: 'Portes & fenêtres',
+    allClosed: 'Tout est fermé',
+    climate: 'Climat',
+    highest: 'LA PLUS HAUTE',
+    lowest: 'LA PLUS BASSE',
+  },
+  doorName: "porte d'entrée",
+  overlays: {
+    selectMode: "Sélectionnez un mode d'activation",
+    armPartial: 'Activer partiellement',
+    armTotal: 'Activer totalement',
+    enterCode: 'Entrez votre code',
+    clear: 'EFFACER',
+    ok: 'OK',
+    wrongCode: 'Code incorrect',
+    biometric: "ACTIVER L'IDENTIFICATION BIOMÉTRIQUE",
+  },
+  cameras: {
+    title: 'Caméras',
+    noMedia: 'Aucunes photos ou vidéos',
+    gallery: 'GALERIE',
+    names: { living: 'salon', nightHall: 'hall de nuit' },
+  },
+  history: {
+    title: 'Historique',
+    filter: 'FILTRE',
+    batterySubtitle: (door: string) => `Serrure connectée en ${door}`,
+    events: {
+      disarmed: () => 'Désactivé',
+      armed_total: () => 'Activé totalement',
+      armed_partial: () => 'Activé partiellement',
+      locked: (door) => `Verrouillé ${door}`,
+      unlocked: (door) => `Déverrouillé ${door}`,
+      battery: () => 'Batterie rétablie',
+      lock_failure: () => 'Echec du déverrouillage du LockGuard',
+    } satisfies Record<EventType, (door: string) => string>,
+  },
+  sos: {
+    twoSteps: 'Deux étapes pour envoyer un SOS',
+    cancelHint: "Appuyez sur Annuler si vous n'essayez pas d'envoyer un SOS",
+    where: "Où est l'urgence ?",
+    otherLocation: 'Autre localisation',
+    address: 'Rue des Tilleuls',
+  },
+  sosTimer: {
+    title: 'Protection personnelle',
+    setTimer: 'Définir le Timer',
+    running: 'Timer en cours',
+    clear: 'EFFACER',
+    activity: 'Dites-nous en plus sur votre activité',
+    maxChars: (max: number) => `Max ${max} caractères`,
+    start: 'DÉMARRER LE TIMER',
+    stop: 'ARRÊTER LE TIMER',
+    plus5: '+5 MIN',
+    remove5: 'Retirer 5 minutes',
+    add5: 'Ajouter 5 minutes',
+    done: 'Temps écoulé',
+    doneMessage: 'Un SOS aurait été envoyé à la centrale.',
+    demoNote: "Démo : aucune alerte réelle n'a été déclenchée.",
+    map: {
+      mainStreet: 'Rue des Tilleuls',
+      sideStreet: 'Chemin des Saules',
+      bakery: 'Boulangerie du Parc',
+      playground: ['Aire de jeux', 'des Saules'],
+      close1: 'Clos des Lilas 1',
+      close6: 'Clos des Lilas 6',
+    },
+  },
+  detail: { overview: 'Aperçu', personalisation: 'Personnalisation' },
+  doorsWindows: {
+    serial: 'N° de série',
+    closed: 'Fermé',
+    sensors: {
+      bathroom: 'Fenêtre salle de bain',
+      living: 'Fenêtre salon',
+      livingLeft: 'Fenêtre salon gauche',
+      slidingDoor: 'baie vitrée',
+      hall: 'fenêtre hall',
+      toilet: 'fenêtre toilette',
+    },
+  },
+  climate: { rooms: { garage: 'garage', attic: 'grenier' } },
+  desktop: {
+    mobileOnly: 'Cette démo est conçue pour mobile.',
+    scan: 'Scannez le QR code pour l’ouvrir sur votre téléphone.',
+  },
+}
+
+export type Dictionary = typeof fr
+
+const nl: Dictionary = {
+  time: {
+    locale: 'nl-BE',
+    ago: (value, unit) => `${value} ${{ min: 'MIN', h: 'U', d: 'D' }[unit]} GELEDEN`,
+    today: 'VANDAAG',
+    yesterday: 'GISTEREN',
+    months: ['JAN', 'FEB', 'MRT', 'APR', 'MEI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC'],
+  },
+  common: { cancel: 'ANNULEREN', close: 'SLUITEN', back: 'Terug' },
+  alarm: {
+    off: 'Uitgeschakeld',
+    partial: 'Gedeeltelijk ingeschakeld',
+    total: 'Volledig ingeschakeld',
+    arming: 'Inschakelen…',
+    disarming: 'Uitschakelen…',
+    change: 'Alarmmodus wijzigen',
+  },
+  tabs: { home: 'Start', cameras: "Camera's", history: 'Geschiedenis', support: 'Support', more: 'Meer' },
+  home: {
+    locks: 'Slimme sloten',
+    learnMore: 'Meer info',
+    lockDoor: 'Deur vergrendelen',
+    unlockDoor: 'Deur ontgrendelen',
+    fire: 'Brandveiligheid',
+    deviceStatus: 'Toestelstatus',
+    allGood: 'ALLES OK',
+    fireDrill: 'Brandoefening',
+    startNow: 'NU STARTEN',
+    guardian: 'Verilab Guardian',
+    triggerSos: 'SOS versturen',
+    sosHelp: 'Gebruik een kaart of een Timer om indien nodig automatisch een SOS te versturen',
+    sosTimer: 'SOS TIMER / BESTEMMING',
+    doorsWindows: 'Deuren & ramen',
+    allClosed: 'Alles is gesloten',
+    climate: 'Klimaat',
+    highest: 'DE HOOGSTE',
+    lowest: 'DE LAAGSTE',
+  },
+  doorName: 'voordeur',
+  overlays: {
+    selectMode: 'Selecteer een inschakelmodus',
+    armPartial: 'Gedeeltelijk inschakelen',
+    armTotal: 'Volledig inschakelen',
+    enterCode: 'Voer uw code in',
+    clear: 'WISSEN',
+    ok: 'OK',
+    wrongCode: 'Onjuiste code',
+    biometric: 'BIOMETRISCHE IDENTIFICATIE ACTIVEREN',
+  },
+  cameras: {
+    title: "Camera's",
+    noMedia: "Geen foto's of video's",
+    gallery: 'GALERIJ',
+    names: { living: 'woonkamer', nightHall: 'nachthal' },
+  },
+  history: {
+    title: 'Geschiedenis',
+    filter: 'FILTER',
+    batterySubtitle: (door) => `Slim slot aan de ${door}`,
+    events: {
+      disarmed: () => 'Uitgeschakeld',
+      armed_total: () => 'Volledig ingeschakeld',
+      armed_partial: () => 'Gedeeltelijk ingeschakeld',
+      locked: (door) => `${capitalize(door)} vergrendeld`,
+      unlocked: (door) => `${capitalize(door)} ontgrendeld`,
+      battery: () => 'Batterij hersteld',
+      lock_failure: () => 'Ontgrendeling van de LockGuard mislukt',
+    },
+  },
+  sos: {
+    twoSteps: 'Twee stappen om een SOS te versturen',
+    cancelHint: 'Druk op Annuleren als u geen SOS wilt versturen',
+    where: 'Waar is het noodgeval?',
+    otherLocation: 'Andere locatie',
+    address: 'Lindenstraat',
+  },
+  sosTimer: {
+    title: 'Persoonlijke bescherming',
+    setTimer: 'Timer instellen',
+    running: 'Timer loopt',
+    clear: 'WISSEN',
+    activity: 'Vertel ons meer over uw activiteit',
+    maxChars: (max) => `Max. ${max} tekens`,
+    start: 'TIMER STARTEN',
+    stop: 'TIMER STOPPEN',
+    plus5: '+5 MIN',
+    remove5: '5 minuten minder',
+    add5: '5 minuten meer',
+    done: 'Tijd verstreken',
+    doneMessage: 'Er zou een SOS naar de meldkamer zijn verstuurd.',
+    demoNote: 'Demo: er werd geen echt alarm verstuurd.',
+    map: {
+      mainStreet: 'Lindenstraat',
+      sideStreet: 'Wilgenweg',
+      bakery: 'Bakkerij Het Park',
+      playground: ['Speeltuin', 'De Wilgen'],
+      close1: 'Seringenhof 1',
+      close6: 'Seringenhof 6',
+    },
+  },
+  detail: { overview: 'Overzicht', personalisation: 'Personalisatie' },
+  doorsWindows: {
+    serial: 'Serienummer',
+    closed: 'Gesloten',
+    sensors: {
+      bathroom: 'Raam badkamer',
+      living: 'Raam woonkamer',
+      livingLeft: 'Raam woonkamer links',
+      slidingDoor: 'schuifraam',
+      hall: 'raam hal',
+      toilet: 'raam toilet',
+    },
+  },
+  climate: { rooms: { garage: 'garage', attic: 'zolder' } },
+  desktop: {
+    mobileOnly: 'Deze demo is ontworpen voor mobiel.',
+    scan: 'Scan de QR-code om ze op uw telefoon te openen.',
+  },
+}
+
+function capitalize(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+export const dictionaries = { fr, nl }
+export type Lang = keyof typeof dictionaries

@@ -3,16 +3,19 @@ import { ChevronRight, CircleHelp, Settings, Thermometer } from 'lucide-react'
 import { useDemo } from '../store/demoStore'
 import type { ClimateRoom } from '../store/climate'
 import { SubPageHeader } from '../components/SubPageHeader'
+import { useI18n } from '../i18n/I18nProvider'
+import { weekdayShort } from '../lib/time'
 
 const TEMP_COLOR = '#e4002b'
 const HUMIDITY_COLOR = '#1ab4ee'
 
 export function Climate() {
   const { climate } = useDemo()
+  const { t } = useI18n()
   return (
     <div className="pb-[10px]">
       <SubPageHeader
-        title="Climat"
+        title={t.home.climate}
         trailing={
           <span aria-disabled="true" className="block p-1 text-brand opacity-40">
             <CircleHelp size={24} strokeWidth={1.8} />
@@ -29,10 +32,11 @@ export function Climate() {
 }
 
 function RoomCard({ room }: { room: ClimateRoom }) {
+  const { t } = useI18n()
   return (
     <section className="mx-[7px] mb-[27px] overflow-hidden rounded-[7px] bg-card shadow-card">
       <header className="flex h-[48px] items-center justify-between border-b border-line pr-[14px] pl-[14px]">
-        <h2 className="text-[16px] font-medium text-ink">{room.room}</h2>
+        <h2 className="text-[16px] font-medium text-ink">{t.climate.rooms[room.room]}</h2>
         <span aria-disabled="true" className="text-ink opacity-40">
           <Settings size={20} strokeWidth={1.6} />
         </span>
@@ -58,6 +62,7 @@ function RoomCard({ room }: { room: ClimateRoom }) {
 
 /** Graphique 7 jours : température (rouge, axe gauche) et humidité (bleu, axe droit 0-100 %). */
 function ClimateChart({ room }: { room: ClimateRoom }) {
+  const { t } = useI18n()
   const ref = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(360)
   useLayoutEffect(() => {
@@ -123,7 +128,7 @@ function ClimateChart({ room }: { room: ClimateRoom }) {
         <path d={path((p) => yT(p.temperature))} fill="none" stroke={TEMP_COLOR} strokeWidth={1.5} strokeLinejoin="round" />
         {days.map((d) => (
           <text key={d} x={x(d)} y={118} textAnchor="middle" fontSize={12} fill="#2b2b2b">
-            {new Date(d).toLocaleDateString('fr-FR', { weekday: 'short' })}
+            {weekdayShort(d, t.time)}
           </text>
         ))}
       </svg>

@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
 import { LockKeyhole, LockKeyholeOpen, TriangleAlert, Wrench } from 'lucide-react'
 import { useDemo } from '../store/demoStore'
-import { DOOR_NAME, type EventType, type HistoryEvent } from '../store/seed'
+import type { EventType, HistoryEvent } from '../store/seed'
+import { useI18n } from '../i18n/I18nProvider'
 import { useNow } from '../hooks/useNow'
 import { clock, groupByDay } from '../lib/time'
 import { PageTitle } from '../components/PageTitle'
@@ -9,28 +10,29 @@ import { DisabledChevron } from '../components/Card'
 import { StatusCircle, type CircleVariant } from '../components/StatusCircle'
 import { ShieldCheck, ShieldHalf, ShieldOff } from '../components/icons/Shields'
 
-const EVENT_META: Record<EventType, { title: string; variant: CircleVariant; icon: ReactNode }> = {
-  disarmed: { title: 'Désactivé', variant: 'white', icon: <ShieldOff size={18} /> },
-  armed_total: { title: 'Activé totalement', variant: 'red', icon: <ShieldCheck size={18} /> },
-  armed_partial: { title: 'Activé partiellement', variant: 'orange', icon: <ShieldHalf size={18} /> },
-  locked: { title: `Verrouillé ${DOOR_NAME}`, variant: 'green', icon: <LockKeyhole size={16} strokeWidth={2} /> },
-  unlocked: { title: `Déverrouillé ${DOOR_NAME}`, variant: 'green', icon: <LockKeyholeOpen size={16} strokeWidth={2} /> },
-  battery: { title: 'Batterie rétablie', variant: 'yellow', icon: <Wrench size={16} strokeWidth={2} /> },
-  lock_failure: { title: 'Echec du déverrouillage du LockGuard', variant: 'yellow', icon: <TriangleAlert size={16} strokeWidth={2} /> },
+const EVENT_META: Record<EventType, { variant: CircleVariant; icon: ReactNode }> = {
+  disarmed: { variant: 'white', icon: <ShieldOff size={18} /> },
+  armed_total: { variant: 'red', icon: <ShieldCheck size={18} /> },
+  armed_partial: { variant: 'orange', icon: <ShieldHalf size={18} /> },
+  locked: { variant: 'green', icon: <LockKeyhole size={16} strokeWidth={2} /> },
+  unlocked: { variant: 'green', icon: <LockKeyholeOpen size={16} strokeWidth={2} /> },
+  battery: { variant: 'yellow', icon: <Wrench size={16} strokeWidth={2} /> },
+  lock_failure: { variant: 'yellow', icon: <TriangleAlert size={16} strokeWidth={2} /> },
 }
 
 export function History() {
   const { events } = useDemo()
   const now = useNow()
-  const groups = groupByDay(events, now)
+  const { t } = useI18n()
+  const groups = groupByDay(events, now, t.time)
 
   return (
     <div className="pb-4">
       <PageTitle
-        title="Historique"
+        title={t.history.title}
         action={
           <span aria-disabled="true" className="text-[14px] font-medium tracking-[0.03em] text-brand opacity-40">
-            FILTRE
+            {t.history.filter}
           </span>
         }
       />
@@ -51,8 +53,10 @@ export function History() {
 }
 
 function EventRow({ event, last }: { event: HistoryEvent; last: boolean }) {
+  const { t } = useI18n()
   const meta = EVENT_META[event.type]
-  const subtitle = event.type === 'battery' ? `Serrure connectée en ${DOOR_NAME}` : event.by
+  const title = t.history.events[event.type](t.doorName)
+  const subtitle = event.type === 'battery' ? t.history.batterySubtitle(t.doorName) : event.by
   return (
     <li className="relative flex pr-[14px] pb-[13px] pl-[13px]">
       {!last && <span className="absolute top-[30px] bottom-0 left-[59px] w-[1.5px] bg-[#b5b5b5]" />}
@@ -62,7 +66,7 @@ function EventRow({ event, last }: { event: HistoryEvent; last: boolean }) {
       </StatusCircle>
       <div className="ml-[7px] flex min-h-[62px] flex-1 items-center rounded-[5px] bg-card pr-[12px] pl-[13px]">
         <div className="min-w-0 flex-1 py-[8px]">
-          <p className="text-[16px] leading-[20px] text-ink">{meta.title}</p>
+          <p className="text-[16px] leading-[20px] text-ink">{title}</p>
           <p className="mt-[3px] text-[14px] text-muted">{subtitle}</p>
         </div>
         <DisabledChevron />
