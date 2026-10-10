@@ -1,0 +1,85 @@
+import { NavLink, useLocation } from 'react-router'
+import { CircleHelp, Ellipsis, House } from 'lucide-react'
+
+/** Routes affichées sous l'onglet Accueil. */
+const HOME_PATHS = ['/', '/portes-fenetres', '/climat']
+
+function HomeTabIcon({ active }: { active: boolean }) {
+  if (!active) return <House size={22} strokeWidth={1.6} />
+  return (
+    <svg width={22} height={22} viewBox="0 0 24 24">
+      <path d="M12 2.5 1.8 11h2.7v10.5h15V11h2.7L12 2.5Z" fill="currentColor" />
+      <rect x={9.6} y={14} width={4.8} height={7.5} fill="#fff" />
+    </svg>
+  )
+}
+
+function CameraTabIcon({ active }: { active: boolean }) {
+  return (
+    <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+      {active ? (
+        <>
+          <rect x={2.5} y={4} width={19} height={16} rx={1.5} fill="currentColor" />
+          <circle cx={12} cy={12} r={3.2} fill="#fff" stroke="none" />
+          <circle cx={18} cy={7} r={0.9} fill="#fff" stroke="none" />
+        </>
+      ) : (
+        <>
+          <rect x={3} y={4.5} width={18} height={15} rx={1.5} />
+          <circle cx={12} cy={12} r={3.6} />
+          <circle cx={17.6} cy={7.6} r={0.6} fill="currentColor" />
+        </>
+      )}
+    </svg>
+  )
+}
+
+function HistoryTabIcon({ active }: { active: boolean }) {
+  return (
+    <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round">
+      <circle cx={12} cy={12} r={9.5} fill={active ? 'currentColor' : 'none'} />
+      <path d="M12 6.5V12l3.5 3" stroke={active ? '#fff' : 'currentColor'} strokeWidth={2} />
+    </svg>
+  )
+}
+
+const linkClass = ({ isActive }: { isActive: boolean }) =>
+  `flex flex-1 flex-col items-center gap-[3px] pt-[9px] ${isActive ? 'text-brand' : 'text-ink'}`
+
+export function TabBar() {
+  const homeActive = HOME_PATHS.includes(useLocation().pathname)
+  return (
+    <nav className="pb-safe shrink-0 border-t border-line bg-card">
+      <div className="flex h-[58px] text-[13px] tracking-[0.02em]">
+        <NavLink to="/" className={linkClass({ isActive: homeActive })}>
+          <HomeTabIcon active={homeActive} />
+          Accueil
+        </NavLink>
+        <NavLink to="/cameras" className={linkClass}>
+          {({ isActive }) => (
+            <>
+              <CameraTabIcon active={isActive} />
+              Caméras
+            </>
+          )}
+        </NavLink>
+        <NavLink to="/historique" className={linkClass}>
+          {({ isActive }) => (
+            <>
+              <HistoryTabIcon active={isActive} />
+              Historique
+            </>
+          )}
+        </NavLink>
+        <span aria-disabled="true" className="flex flex-1 flex-col items-center gap-[3px] pt-[9px] text-ink opacity-40">
+          <CircleHelp size={22} strokeWidth={1.6} />
+          Support
+        </span>
+        <span aria-disabled="true" className="flex flex-1 flex-col items-center gap-[3px] pt-[9px] text-ink opacity-40">
+          <Ellipsis size={22} strokeWidth={2.4} />
+          Plus
+        </span>
+      </div>
+    </nav>
+  )
+}
