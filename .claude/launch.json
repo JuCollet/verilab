@@ -23,6 +23,21 @@
         "--strictPort"
       ],
       "port": 4173
+    },
+    {
+      "name": "verilab-pages",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "BASE_PATH=/verilab/",
+        "npx",
+        "vite",
+        "preview",
+        "--port",
+        "4174",
+        "--strictPort"
+      ],
+      "port": 4174,
+      "url": "http://localhost:4174"
     }
   ]
 }
