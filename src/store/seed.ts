@@ -138,3 +138,6 @@ export const SYSTEM_USERS: SystemUser[] = [
 ]
 
 export const EMERGENCY_CONTACTS_COUNT = 6
+
+/** Routines suggérées (Plus › Fonctionnalités › Routines) ; textes dans les dictionnaires (routines.suggestions). */
+export const SUGGESTED_ROUTINES = ['goodNight', 'goodMorning'] as const

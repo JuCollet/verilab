@@ -12,6 +12,9 @@ import { VideoGuides } from './pages/VideoGuides'
 import { More } from './pages/More'
 import { Users } from './pages/Users'
 import { AddUser } from './pages/AddUser'
+import { Features } from './pages/Features'
+import { Routines } from './pages/Routines'
+import { SuggestedRoutines } from './pages/SuggestedRoutines'
 
 export const router = createBrowserRouter([
   { path: '/sos', element: <Sos /> },
@@ -29,6 +32,9 @@ export const router = createBrowserRouter([
       { path: 'support/guides-video', element: <VideoGuides /> },
       { path: 'plus', element: <More /> },
       { path: 'plus/utilisateurs', element: <Users /> },
+      { path: 'plus/fonctionnalites', element: <Features /> },
+      { path: 'plus/fonctionnalites/routines', element: <Routines /> },
+      { path: 'plus/fonctionnalites/routines/suggerees', element: <SuggestedRoutines /> },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

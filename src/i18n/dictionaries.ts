@@ -205,6 +205,57 @@ const fr = {
       save: 'SAUVEGARDER',
     },
   },
+  features: {
+    title: 'Fonctionnalités',
+    /** Diapositives du carrousel : [titre, texte]. */
+    slides: {
+      routines: [
+        'Routines',
+        "Simplifiez votre vie – laissez le système s'activer automatiquement, contrôler l'éclairage et bien plus encore",
+      ],
+      smartButtons: ['Boutons smart', 'Éteindre la lumière et activer le mode total en même temps ? Et profitez de bien plus encore !'],
+      worksWith: [
+        'Works with',
+        "Connectez le système à des lampes/serrures connectées et à d'autres appareils connectés d'autres marques.",
+      ],
+    } satisfies Record<string, [string, string]>,
+    ready: "Prêt pour l'activation",
+    readyHint: 'Ces fonctionnalités sont incluses dans votre abonnement actuel',
+    items: {
+      routines: ['Routines', "Programmez des routines intelligentes pour le système d'alarme"],
+      smartButtons: ['Boutons smart', "Changez le statut de l'alarme et contrôlez les Smartplugs en un clic"],
+      worksWith: ['Works with', "Connectez le système d'alarme aux appareils intelligents de votre maison"],
+    } satisfies Record<string, [string, string]>,
+    active: 'Actuellement actif',
+    activeTiles: {
+      home: '@Home',
+      climate: 'Climat',
+      doorsWindows: 'Portes & fenêtres',
+      cameras: 'Caméras',
+      smartlock: 'Smartlock',
+      smoke: 'Détection de fumée',
+    },
+  },
+  routines: {
+    title: 'Routines',
+    intro: 'Simplifiez votre journée grâce aux routines proposées ou créez les vôtres.',
+    suggested: 'ROUTINES SUGGÉRÉES',
+    create: 'Créer une routine',
+    suggestedTitle: 'Routines suggérées',
+    new: 'Nouveau',
+    use: 'UTILISER LA ROUTINE SUGGÉRÉE',
+    /** Routines suggérées : [titre, description]. */
+    suggestions: {
+      goodNight: [
+        'Bonne nuit',
+        "Sécurisez votre maison automatiquement pendant la nuit avec Activation partielle depuis Désactivation à l'heure du coucher.",
+      ],
+      goodMorning: [
+        'Bonjour',
+        "Commencez votre journée par une Désactivation de l'Activation partielle lorsque vous vous réveillez.",
+      ],
+    } satisfies Record<string, [string, string]>,
+  },
   videoGuides: {
     title: 'Guides vidéo',
     moreInfo: "Afficher plus d'info",
@@ -423,6 +474,49 @@ const nl: Dictionary = {
       emergencyToggle: 'Toevoegen aan noodcontacten',
       emergencyHint: 'De meldkamer kan bellen bij een alarm.',
       save: 'OPSLAAN',
+    },
+  },
+  features: {
+    title: 'Functionaliteiten',
+    slides: {
+      routines: [
+        'Routines',
+        'Maak uw leven eenvoudiger – laat het systeem automatisch inschakelen, de verlichting bedienen en nog veel meer',
+      ],
+      smartButtons: ['Smart buttons', 'Het licht uitdoen en tegelijk volledig inschakelen? En profiteer van nog veel meer!'],
+      worksWith: ['Works with', 'Verbind het systeem met slimme lampen/sloten en andere slimme toestellen van andere merken.'],
+    },
+    ready: 'Klaar voor activering',
+    readyHint: 'Deze functionaliteiten zijn inbegrepen in uw huidige abonnement',
+    items: {
+      routines: ['Routines', 'Programmeer slimme routines voor het alarmsysteem'],
+      smartButtons: ['Smart buttons', 'Wijzig de alarmstatus en bedien de Smartplugs met één klik'],
+      worksWith: ['Works with', 'Verbind het alarmsysteem met de slimme toestellen in uw huis'],
+    },
+    active: 'Momenteel actief',
+    activeTiles: {
+      home: '@Home',
+      climate: 'Klimaat',
+      doorsWindows: 'Deuren & ramen',
+      cameras: "Camera's",
+      smartlock: 'Smartlock',
+      smoke: 'Rookdetectie',
+    },
+  },
+  routines: {
+    title: 'Routines',
+    intro: 'Vereenvoudig uw dag met de voorgestelde routines of maak uw eigen routines.',
+    suggested: 'VOORGESTELDE ROUTINES',
+    create: 'Routine aanmaken',
+    suggestedTitle: 'Voorgestelde routines',
+    new: 'Nieuw',
+    use: 'VOORGESTELDE ROUTINE GEBRUIKEN',
+    suggestions: {
+      goodNight: [
+        'Goedenacht',
+        "Beveilig uw huis 's nachts automatisch door bij het slapengaan van Uitgeschakeld naar Gedeeltelijk ingeschakeld te gaan.",
+      ],
+      goodMorning: ['Goedemorgen', 'Begin uw dag door Gedeeltelijk ingeschakeld uit te schakelen wanneer u wakker wordt.'],
     },
   },
   videoGuides: {

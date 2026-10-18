@@ -10,16 +10,16 @@ type TileId = keyof Dictionary['more']['tiles']
 
 const ICON = { size: 26, strokeWidth: 1.8 }
 
-const TILES: { id: TileId; icon: ReactNode }[] = [
+const TILES: { id: TileId; icon: ReactNode; to?: string }[] = [
   { id: 'webshop', icon: <ShoppingCart {...ICON} /> },
   { id: 'news', icon: <Newspaper {...ICON} /> },
   { id: 'referral', icon: <Trophy {...ICON} /> },
   { id: 'appSettings', icon: <PhoneSettingsIcon /> },
-  { id: 'features', icon: <UserFeatureIcon /> },
+  { id: 'features', icon: <UserFeatureIcon />, to: '/plus/fonctionnalites' },
   { id: 'devices', icon: <DevicesFolderIcon /> },
 ]
 
-/** Écran « Plus ». Seule « Compte et utilisateurs » ouvre un écran ; le reste est affiché normalement mais inerte. */
+/** Écran « Plus ». Seuls « Fonctionnalités » et « Compte et utilisateurs » ouvrent un écran ; le reste est affiché normalement mais inerte. */
 export function More() {
   const { t } = useI18n()
   const rows = [
@@ -39,12 +39,26 @@ export function More() {
       </header>
 
       <ul className="grid grid-cols-3 gap-[7px]">
-        {TILES.map((tile) => (
-          <li key={tile.id} className="flex min-h-[66px] flex-col items-center justify-center gap-[6px] rounded-[5px] bg-card px-[4px] py-[8px] shadow-card">
-            <span className="text-vivid">{tile.icon}</span>
-            <span className="text-center text-[13px] leading-[15px] tracking-[-0.01em] text-ink">{t.more.tiles[tile.id]}</span>
-          </li>
-        ))}
+        {TILES.map((tile) => {
+          const className = 'flex h-full min-h-[66px] flex-col items-center justify-center gap-[6px] rounded-[5px] bg-card px-[4px] py-[8px] shadow-card'
+          const content = (
+            <>
+              <span className="text-vivid">{tile.icon}</span>
+              <span className="text-center text-[13px] leading-[15px] tracking-[-0.01em] text-ink">{t.more.tiles[tile.id]}</span>
+            </>
+          )
+          return (
+            <li key={tile.id}>
+              {tile.to ? (
+                <Link to={tile.to} className={`${className} active:bg-bg`}>
+                  {content}
+                </Link>
+              ) : (
+                <div className={className}>{content}</div>
+              )}
+            </li>
+          )
+        })}
       </ul>
 
       <ul className="mt-[14px] rounded-[5px] bg-card shadow-card">
