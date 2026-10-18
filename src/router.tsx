@@ -15,6 +15,7 @@ import { AddUser } from './pages/AddUser'
 import { Features } from './pages/Features'
 import { Routines } from './pages/Routines'
 import { SuggestedRoutines } from './pages/SuggestedRoutines'
+import { ReminderDetail, Reminders } from './pages/Reminders'
 
 export const router = createBrowserRouter([
   { path: '/sos', element: <Sos /> },
@@ -35,6 +36,8 @@ export const router = createBrowserRouter([
       { path: 'plus/fonctionnalites', element: <Features /> },
       { path: 'plus/fonctionnalites/routines', element: <Routines /> },
       { path: 'plus/fonctionnalites/routines/suggerees', element: <SuggestedRoutines /> },
+      { path: 'plus/fonctionnalites/routines/rappel', element: <Reminders /> },
+      { path: 'plus/fonctionnalites/routines/rappel/:kind', element: <ReminderDetail /> },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },
