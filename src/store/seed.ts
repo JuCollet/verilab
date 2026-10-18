@@ -18,7 +18,7 @@ export type EventType =
 export type HistoryEvent = { id: string; type: EventType; at: number; by: string }
 
 const TEST_USER = 'Thomas test'
-const SECOND_USER = 'Sophie Janssens'
+const SECOND_USER = 'Sophie Delvaux'
 const DAY = 24 * 60
 
 // Décalages en minutes avant l'ouverture de la démo, d'après la capture « Historique »
@@ -48,6 +48,8 @@ export function createSeed(now = Date.now()) {
     doorsWindowsAt: minutesAgo(59, now),
     sensors: createSensors(minutesAgo(59, now), now),
     climate: createClimate(now),
+    users: [...SYSTEM_USERS],
+    emergencyContacts: EMERGENCY_CONTACTS_COUNT,
     events: seedEvents.map(([type, offset, by], i): HistoryEvent => ({
       id: `seed-${i}`,
       type,
@@ -83,3 +85,56 @@ export function createSensors(doorsWindowsAt: number, now = Date.now()): Sensor[
     { id: 'toilet', serial: '2KG3 PW5T', at: at(203, 14, 41) },
   ]
 }
+
+export type UserRole = 'admin' | 'systemManager' | 'restricted' | 'minimal' | 'user' | 'noAccess'
+/** Rôles proposés à la création d'un utilisateur, dans l'ordre du menu. */
+export const ASSIGNABLE_ROLES = ['admin', 'restricted', 'minimal', 'noAccess'] as const satisfies readonly UserRole[]
+export type ContactRole = 'emergencyContact' | 'alarmResponsible' | 'household' | 'hasKey'
+export type AccessItem = 'code' | 'tagGreen' | 'tagPink' | 'keyfob' | 'starkey'
+export type NotificationChannel = 'email' | 'sms' | 'push'
+
+export type SystemUser = {
+  name: string
+  role: UserRole
+  contactRoles: ContactRole[]
+  access: AccessItem[]
+  notifications: NotificationChannel[]
+  /** Coordonnées saisies à la création ; null si laissées vides, absentes pour les utilisateurs du seed. */
+  phone?: string | null
+  altPhone?: string | null
+  email?: string | null
+}
+
+/** Utilisateurs du système (écran Plus › Compte et utilisateurs), d'après la capture, noms fictifs. */
+export const SYSTEM_USERS: SystemUser[] = [
+  {
+    name: SECOND_USER,
+    role: 'admin',
+    contactRoles: ['emergencyContact', 'alarmResponsible', 'hasKey'],
+    access: ['code', 'tagGreen'],
+    notifications: [],
+  },
+  {
+    name: CURRENT_USER,
+    role: 'systemManager',
+    contactRoles: ['emergencyContact', 'household', 'hasKey'],
+    access: ['code', 'keyfob', 'starkey'],
+    notifications: ['email', 'sms', 'push'],
+  },
+  {
+    name: 'Emma Peeters',
+    role: 'noAccess',
+    contactRoles: ['emergencyContact', 'alarmResponsible'],
+    access: ['code', 'tagPink'],
+    notifications: [],
+  },
+  {
+    name: 'Thomas test',
+    role: 'user',
+    contactRoles: ['household'],
+    access: ['code'],
+    notifications: ['push'],
+  },
+]
+
+export const EMERGENCY_CONTACTS_COUNT = 6

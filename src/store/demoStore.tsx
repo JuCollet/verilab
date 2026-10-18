@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useReducer, useRef, type ReactNode } from 'react'
-import { createSeed, CURRENT_USER, type AlarmMode, type EventType, type HistoryEvent } from './seed'
+import { createSeed, CURRENT_USER, type AlarmMode, type EventType, type HistoryEvent, type SystemUser } from './seed'
 
 export type PendingAction = { kind: 'arm'; mode: Exclude<AlarmMode, 'off'> } | { kind: 'disarm' } | { kind: 'door'; lock: boolean }
 
@@ -15,6 +15,7 @@ type Action =
   | { type: 'CLOSE_OVERLAY' }
   | { type: 'START'; action: PendingAction }
   | { type: 'COMMIT'; action: PendingAction; at: number }
+  | { type: 'ADD_USER'; user: SystemUser }
 
 const PENDING_MS = 1500
 
@@ -40,6 +41,11 @@ function reducer(state: State, action: Action): State {
       else next.alarm = { mode: done.kind === 'arm' ? done.mode : 'off', at, by: CURRENT_USER }
       return next
     }
+    case 'ADD_USER': {
+      const { user } = action
+      const emergency = user.contactRoles.includes('emergencyContact')
+      return { ...state, users: [user, ...state.users], emergencyContacts: state.emergencyContacts + (emergency ? 1 : 0) }
+    }
   }
 }
 
@@ -48,6 +54,8 @@ type DemoContext = State & {
   openPin: (action: PendingAction) => void
   closeOverlay: () => void
   confirm: (action: PendingAction) => void
+  /** Ajout en mémoire seulement : la liste revient au seed au rechargement. */
+  addUser: (user: SystemUser) => void
 }
 
 const Ctx = createContext<DemoContext | null>(null)
@@ -66,6 +74,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         clearTimeout(timer.current)
         timer.current = setTimeout(() => dispatch({ type: 'COMMIT', action, at: Date.now() }), PENDING_MS)
       },
+      addUser: (user: SystemUser) => dispatch({ type: 'ADD_USER', user }),
     }),
     [],
   )

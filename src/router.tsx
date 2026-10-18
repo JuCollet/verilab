@@ -9,10 +9,14 @@ import { DoorsWindows } from './pages/DoorsWindows'
 import { Climate } from './pages/Climate'
 import { Support } from './pages/Support'
 import { VideoGuides } from './pages/VideoGuides'
+import { More } from './pages/More'
+import { Users } from './pages/Users'
+import { AddUser } from './pages/AddUser'
 
 export const router = createBrowserRouter([
   { path: '/sos', element: <Sos /> },
   { path: '/sos-timer', element: <SosTimer /> },
+  { path: '/plus/utilisateurs/ajouter', element: <AddUser /> },
   {
     element: <AppShell />,
     children: [
@@ -23,6 +27,8 @@ export const router = createBrowserRouter([
       { path: 'climat', element: <Climate /> },
       { path: 'support', element: <Support /> },
       { path: 'support/guides-video', element: <VideoGuides /> },
+      { path: 'plus', element: <More /> },
+      { path: 'plus/utilisateurs', element: <Users /> },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

@@ -29,7 +29,7 @@ const SECTIONS: { id: SectionId; cards: { id: CardId; icon: ReactNode; highlight
   {
     id: 'alarm',
     cards: [
-      { id: 'users', icon: <Bell {...ICON} /> },
+      { id: 'users', icon: <Bell {...ICON} />, to: '/plus/utilisateurs' },
       { id: 'partial', icon: <ShieldHalf size={24} /> },
     ],
   },
@@ -43,7 +43,8 @@ const SECTIONS: { id: SectionId; cards: { id: CardId; icon: ReactNode; highlight
 ]
 
 /**
- * Écran Support : rangées de cartes défilant horizontalement. Seule « Guides vidéo » ouvre un écran ; les autres sont inertes.
+ * Écran Support : rangées de cartes défilant horizontalement. « Utilisateurs » et « Guides vidéo » ouvrent un écran ;
+ * les autres sont inertes.
  * Contrairement à l'original, les textes ne sont jamais tronqués : les cartes d'une rangée s'agrandissent ensemble.
  */
 export function Support() {
@@ -70,7 +71,7 @@ export function Support() {
               return (
                 <li key={card.id} className="min-h-[114px] w-[206px] shrink-0 snap-start">
                   {card.to ? (
-                    <Link to={card.to} className={`${className} active:bg-bg`}>
+                    <Link to={card.to} state={{ from: '/support' }} className={`${className} active:bg-bg`}>
                       {content}
                     </Link>
                   ) : (

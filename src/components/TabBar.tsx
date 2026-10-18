@@ -59,7 +59,10 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
   `flex flex-1 flex-col items-center gap-[3px] pt-[9px] ${isActive ? 'text-brand' : 'text-ink'}`
 
 export function TabBar() {
-  const homeActive = HOME_PATHS.includes(useLocation().pathname)
+  const location = useLocation()
+  const homeActive = HOME_PATHS.includes(location.pathname)
+  // Un écran partagé (ex. Utilisateurs) ouvert depuis Support garde l'onglet Support actif.
+  const fromSupport = (location.state as { from?: string } | null)?.from === '/support'
   const { t } = useI18n()
   return (
     <nav className="pb-safe shrink-0 border-t border-line bg-card">
@@ -84,18 +87,22 @@ export function TabBar() {
             </>
           )}
         </NavLink>
-        <NavLink to="/support" className={linkClass}>
+        <NavLink to="/support" className={({ isActive }) => linkClass({ isActive: isActive || fromSupport })}>
           {({ isActive }) => (
             <>
-              <SupportTabIcon active={isActive} />
+              <SupportTabIcon active={isActive || fromSupport} />
               {t.tabs.support}
             </>
           )}
         </NavLink>
-        <span aria-disabled="true" className="flex flex-1 flex-col items-center gap-[3px] pt-[9px] text-ink opacity-40">
-          <Ellipsis size={22} strokeWidth={2.4} />
-          {t.tabs.more}
-        </span>
+        <NavLink to="/plus" className={({ isActive }) => linkClass({ isActive: isActive && !fromSupport })}>
+          {({ isActive }) => (
+            <>
+              <Ellipsis size={22} strokeWidth={isActive && !fromSupport ? 3.2 : 2.4} />
+              {t.tabs.more}
+            </>
+          )}
+        </NavLink>
       </div>
     </nav>
   )
