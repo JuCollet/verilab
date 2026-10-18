@@ -1,0 +1,3 @@
+# Démo privée : aucun robot ne doit explorer ni indexer le site.
+User-agent: *
+Disallow: /
