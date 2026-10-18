@@ -23,7 +23,7 @@ const TILES: { id: TileId; icon: ReactNode; to?: string }[] = [
 export function More() {
   const { t } = useI18n()
   const rows = [
-    { content: t.more.account, icon: <Users size={24} strokeWidth={1.5} />, to: '/plus/utilisateurs' },
+    { content: t.more.account, icon: <Users size={24} strokeWidth={1.5} />, to: '/plus/compte' },
     { content: t.more.system, icon: <SlidersVertical size={24} strokeWidth={1.5} /> },
   ]
   return (

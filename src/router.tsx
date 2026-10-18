@@ -11,6 +11,7 @@ import { Support } from './pages/Support'
 import { VideoGuides } from './pages/VideoGuides'
 import { More } from './pages/More'
 import { Users } from './pages/Users'
+import { Account } from './pages/Account'
 import { AddUser } from './pages/AddUser'
 import { Features } from './pages/Features'
 import { Routines } from './pages/Routines'
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
       { path: 'support', element: <Support /> },
       { path: 'support/guides-video', element: <VideoGuides /> },
       { path: 'plus', element: <More /> },
+      { path: 'plus/compte', element: <Account /> },
       { path: 'plus/utilisateurs', element: <Users /> },
       { path: 'plus/fonctionnalites', element: <Features /> },
       { path: 'plus/fonctionnalites/routines', element: <Routines /> },

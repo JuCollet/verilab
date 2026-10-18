@@ -158,6 +158,15 @@ const fr = {
     ],
     logout: 'DÉCONNECTER',
   },
+  account: {
+    /** Lignes de Plus › Compte et utilisateurs : [titre, description]. */
+    rows: {
+      users: ['Utilisateurs', "Gérez les utilisateurs, niveaux d'accès, codes et StarKeys et les paramètres de notifications"],
+      profile: ['Compte', 'Modifiez les informations de votre compte'],
+      invoices: ['Factures', 'Visualisez et téléchargez vos factures'],
+      privacy: ['Protection de la vie privée', 'Gérez les paramètres de confidentialité et de conservation de vos fichiers multimédias'],
+    } satisfies Record<string, [string, string]>,
+  },
   users: {
     title: 'Utilisateurs',
     add: 'Ajouter un utilisateur',
@@ -448,6 +457,14 @@ const nl: Dictionary = {
       'Beheer uw systeem en toestellen, inclusief de verblijfsmodus, de vakantiemodus, huisdieren en geluiden',
     ],
     logout: 'AFMELDEN',
+  },
+  account: {
+    rows: {
+      users: ['Gebruikers', 'Beheer de gebruikers, toegangsniveaus, codes en StarKeys en de meldingsinstellingen'],
+      profile: ['Account', 'Wijzig de gegevens van uw account'],
+      invoices: ['Facturen', 'Bekijk en download uw facturen'],
+      privacy: ['Privacybescherming', 'Beheer de instellingen voor privacy en bewaring van uw mediabestanden'],
+    },
   },
   users: {
     title: 'Gebruikers',

@@ -13,8 +13,8 @@ import { initials } from '../lib/initials'
 export function Users() {
   const { t } = useI18n()
   const { users, emergencyContacts } = useDemo()
-  // Écran partagé entre Plus et Support : le retour ramène à l'écran d'origine.
-  const backTo = (useLocation().state as { from?: string } | null)?.from ?? '/plus'
+  // Écran partagé entre Plus › Compte et utilisateurs et Support : le retour ramène à l'écran d'origine.
+  const backTo = (useLocation().state as { from?: string } | null)?.from ?? '/plus/compte'
   return (
     <div className="pb-[10px]">
       <div className="pt-safe sticky top-0 z-20 bg-card">
