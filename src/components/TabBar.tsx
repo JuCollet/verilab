@@ -44,6 +44,17 @@ function HistoryTabIcon({ active }: { active: boolean }) {
   )
 }
 
+function SupportTabIcon({ active }: { active: boolean }) {
+  if (!active) return <CircleHelp size={22} strokeWidth={1.6} />
+  return (
+    <svg width={22} height={22} viewBox="0 0 24 24">
+      <circle cx={12} cy={12} r={10.5} fill="currentColor" />
+      <path d="M9.4 9.2a2.7 2.7 0 0 1 5.2 1c0 1.8-2.6 2.3-2.6 3.9" fill="none" stroke="#fff" strokeWidth={2.2} strokeLinecap="round" />
+      <circle cx={12} cy={17.4} r={1.3} fill="#fff" />
+    </svg>
+  )
+}
+
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   `flex flex-1 flex-col items-center gap-[3px] pt-[9px] ${isActive ? 'text-brand' : 'text-ink'}`
 
@@ -73,10 +84,14 @@ export function TabBar() {
             </>
           )}
         </NavLink>
-        <span aria-disabled="true" className="flex flex-1 flex-col items-center gap-[3px] pt-[9px] text-ink opacity-40">
-          <CircleHelp size={22} strokeWidth={1.6} />
-          {t.tabs.support}
-        </span>
+        <NavLink to="/support" className={linkClass}>
+          {({ isActive }) => (
+            <>
+              <SupportTabIcon active={isActive} />
+              {t.tabs.support}
+            </>
+          )}
+        </NavLink>
         <span aria-disabled="true" className="flex flex-1 flex-col items-center gap-[3px] pt-[9px] text-ink opacity-40">
           <Ellipsis size={22} strokeWidth={2.4} />
           {t.tabs.more}

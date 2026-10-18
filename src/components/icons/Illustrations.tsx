@@ -46,40 +46,6 @@ export function FireDrillPhone() {
   )
 }
 
-/** Illustration générique d'une caméra intérieure ronde sur pied. */
-export function CameraIllustration() {
-  return (
-    <svg viewBox="0 0 120 180" className="h-full w-auto" preserveAspectRatio="xMidYMid meet">
-      <defs>
-        <linearGradient id="cam-panel" x1="0" x2="1">
-          <stop offset="0" stopColor="#f2f2f2" />
-          <stop offset="0.5" stopColor="#ffffff" />
-          <stop offset="1" stopColor="#e8e8e8" />
-        </linearGradient>
-        <radialGradient id="cam-body" cx="50%" cy="35%" r="65%">
-          <stop offset="0" stopColor="#3a3a3a" />
-          <stop offset="1" stopColor="#0d0d0d" />
-        </radialGradient>
-        <radialGradient id="cam-lens" cx="45%" cy="40%" r="60%">
-          <stop offset="0" stopColor="#7a8494" />
-          <stop offset="0.5" stopColor="#222831" />
-          <stop offset="1" stopColor="#050505" />
-        </radialGradient>
-      </defs>
-      <rect width={120} height={180} fill="url(#cam-panel)" />
-      <path d="M48 120h24l6 46a8 8 0 0 1-8 9H50a8 8 0 0 1-8-9z" fill="#111" />
-      <circle cx={60} cy={64} r={50} fill="url(#cam-body)" />
-      <circle cx={60} cy={64} r={49} fill="none" stroke="#555" strokeWidth={0.6} />
-      <circle cx={60} cy={52} r={14} fill="#1a1a1a" stroke="#2c2c2c" strokeWidth={1.5} />
-      <circle cx={60} cy={52} r={9.5} fill="url(#cam-lens)" />
-      <circle cx={57} cy={49} r={2.6} fill="#c9d3e0" opacity={0.7} />
-      <circle cx={28} cy={67} r={1.6} fill="#2a2a2a" stroke="#444" strokeWidth={0.5} />
-      <circle cx={92} cy={67} r={1.6} fill="#2a2a2a" stroke="#444" strokeWidth={0.5} />
-      <circle cx={60} cy={95} r={1.3} fill="#000" />
-    </svg>
-  )
-}
-
 export function VerilabLogo({ size = 72 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 512 512" className="rounded-[22%]">

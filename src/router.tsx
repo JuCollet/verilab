@@ -7,6 +7,8 @@ import { Sos } from './pages/Sos'
 import { SosTimer } from './pages/SosTimer'
 import { DoorsWindows } from './pages/DoorsWindows'
 import { Climate } from './pages/Climate'
+import { Support } from './pages/Support'
+import { VideoGuides } from './pages/VideoGuides'
 
 export const router = createBrowserRouter([
   { path: '/sos', element: <Sos /> },
@@ -19,6 +21,8 @@ export const router = createBrowserRouter([
       { path: 'historique', element: <History /> },
       { path: 'portes-fenetres', element: <DoorsWindows /> },
       { path: 'climat', element: <Climate /> },
+      { path: 'support', element: <Support /> },
+      { path: 'support/guides-video', element: <VideoGuides /> },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

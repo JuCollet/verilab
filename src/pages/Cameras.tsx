@@ -1,8 +1,9 @@
-import { Camera, Play, Settings } from 'lucide-react'
+import { Settings } from 'lucide-react'
 import { CAMERAS } from '../store/seed'
 import { useI18n } from '../i18n/I18nProvider'
 import { PageTitle } from '../components/PageTitle'
-import { CameraIllustration } from '../components/icons/Illustrations'
+// Image découpée telle quelle dans la capture de l'app d'origine (boutons Play et photo inclus).
+import cameraCard from '../assets/camera-card.webp'
 
 export function Cameras() {
   const { t } = useI18n()
@@ -31,17 +32,7 @@ function CameraCard({ name }: { name: string }) {
   const { t } = useI18n()
   return (
     <section className="mx-[7px] mb-[7px] overflow-hidden rounded-[7px] bg-card shadow-card">
-      <div className="relative flex h-[183px] justify-center bg-linear-to-tr from-camera-from to-camera-to">
-        <div className="h-full w-[123px] overflow-hidden">
-          <CameraIllustration />
-        </div>
-        <span aria-disabled="true" className="absolute bottom-[7px] left-[7px] flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#14304f]/90 text-white opacity-40">
-          <Play size={22} fill="currentColor" strokeWidth={0} className="ml-[3px]" />
-        </span>
-        <span aria-disabled="true" className="absolute bottom-[5px] left-1/2 flex h-[48px] w-[48px] -translate-x-1/2 items-center justify-center rounded-full bg-[#3a3a3a]/80 text-white opacity-40">
-          <Camera size={20} strokeWidth={1.8} />
-        </span>
-      </div>
+      <img src={cameraCard} alt="" draggable={false} className="block aspect-[833/420] w-full" />
       <div className="flex h-[54px] items-center gap-[9px] pr-[16px] pl-[7px]">
         <h2 className="flex-1 text-[16px] font-medium text-ink">{name}</h2>
         <span className="flex h-[19px] items-center rounded-full bg-black px-[7px] text-[13px] tracking-[0.03em] text-white">{t.cameras.noMedia}</span>

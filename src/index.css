@@ -8,6 +8,7 @@
   --color-brand: #e4002b;
   --color-brand-soft: #f4a6b5;
   --color-sos: #ff0020;
+  --color-vivid: #ed002f;
   --color-partial: #ff8500;
   --color-success: #3ba776;
   --color-ok: #2e8b3e;
@@ -15,8 +16,6 @@
   --color-ink: #2b2b2b;
   --color-muted: #6e6e6e;
   --color-line: #e0e0e0;
-  --color-camera-from: #2e6699;
-  --color-camera-to: #6a9bc3;
 
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.12);
   --shadow-round: 0 2px 6px rgba(0, 0, 0, 0.16);
