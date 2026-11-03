@@ -1,7 +1,7 @@
 import { minutesAgo } from '../lib/time'
 import { createClimate } from './climate'
 
-export const CURRENT_USER = 'Thomas Peeters'
+export const CURRENT_USER = 'Utilisateur 1'
 export const DEMO_CODE = '2580'
 
 export type AlarmMode = 'off' | 'partial' | 'total'
@@ -17,8 +17,8 @@ export type EventType =
 
 export type HistoryEvent = { id: string; type: EventType; at: number; by: string }
 
-const TEST_USER = 'Thomas test'
-const SECOND_USER = 'Sophie Delvaux'
+const TEST_USER = 'Utilisateur 4'
+const SECOND_USER = 'Utilisateur 2'
 const DAY = 24 * 60
 
 // Décalages en minutes avant l'ouverture de la démo, d'après la capture « Historique »
@@ -105,7 +105,7 @@ export type SystemUser = {
   email?: string | null
 }
 
-/** Utilisateurs du système (écran Plus › Compte et utilisateurs), d'après la capture, noms fictifs. */
+/** Utilisateurs du système (écran Plus › Compte et utilisateurs), d'après la capture, noms anonymisés. */
 export const SYSTEM_USERS: SystemUser[] = [
   {
     name: SECOND_USER,
@@ -122,14 +122,14 @@ export const SYSTEM_USERS: SystemUser[] = [
     notifications: ['email', 'sms', 'push'],
   },
   {
-    name: 'Emma Peeters',
+    name: 'Utilisateur 3',
     role: 'noAccess',
     contactRoles: ['emergencyContact', 'alarmResponsible'],
     access: ['code', 'tagPink'],
     notifications: [],
   },
   {
-    name: 'Thomas test',
+    name: TEST_USER,
     role: 'user',
     contactRoles: ['household'],
     access: ['code'],
