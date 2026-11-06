@@ -10,7 +10,7 @@ import { alarmVisual } from '../components/alarmVisual'
 import { Broadcast, DoorIcon } from '../components/icons/Shields'
 import { FireDrillPhone, SmokeDetector } from '../components/icons/Illustrations'
 import { useI18n } from '../i18n/I18nProvider'
-import type { Lang } from '../i18n/dictionaries'
+import { LanguageToggle } from '../components/LanguageToggle'
 
 export function Home() {
   const now = useNow()
@@ -61,7 +61,7 @@ function AlarmHeader({ now, sentinelRef }: { now: number; sentinelRef: Ref<HTMLD
 
   return (
     <div className="pt-safe relative flex flex-col items-center pb-[12px]">
-      <LanguageToggle />
+      <LanguageToggle className="absolute top-[calc(env(safe-area-inset-top)+10px)] right-[12px]" />
       <div className="h-[38px]" />
       <StatusCircle size={75} variant={variant} pending={isPending} onClick={onTap} label={t.alarm.change}>
         {icon}
@@ -201,26 +201,5 @@ function ClimateCard({ now }: { now: number }) {
         ))}
       </div>
     </Card>
-  )
-}
-
-/** Bascule discrète FR / NL, en haut à droite de l'Accueil. */
-function LanguageToggle() {
-  const { lang, setLang } = useI18n()
-  const options: Lang[] = ['fr', 'nl']
-  return (
-    <div className="absolute top-[calc(env(safe-area-inset-top)+10px)] right-[12px] flex rounded-full border border-line bg-card/60 p-[2px] text-[11px] font-medium tracking-[0.04em]">
-      {options.map((option) => (
-        <button
-          key={option}
-          type="button"
-          aria-pressed={lang === option}
-          onClick={() => setLang(option)}
-          className={`rounded-full px-[7px] py-[2px] uppercase ${lang === option ? 'bg-ink text-white' : 'text-muted'}`}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
   )
 }

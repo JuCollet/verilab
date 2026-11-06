@@ -305,6 +305,24 @@ const fr = {
     mobileOnly: 'Cette démo est conçue pour mobile.',
     scan: 'Scannez le QR code pour l’ouvrir sur votre téléphone.',
   },
+  demo: {
+    /** Mot répété dans le filigrane. */
+    watermark: 'DÉMO',
+    overline: 'Environnement de démonstration',
+    title: 'Démo – Données fictives uniquement',
+    points: [
+      'Cette application est une maquette de démonstration et de formation.',
+      'Elle ne représente pas une installation client réelle.',
+      'Toutes les données (personnes, adresses, appareils, événements) sont simulées.',
+      "Aucune alerte, aucun SOS et aucune commande n'est réellement envoyé.",
+    ],
+    enter: 'CONTINUER',
+    legalTitle: 'Mentions légales',
+    legalRow: ['Mentions légales', 'Environnement de démonstration et informations sur la société'] as [string, string],
+    /** Mention légale de la société, texte fourni tel quel. */
+    company:
+      'Verisure SA, Rue de la Fusée 66, 1130 Bruxelles, RPM Bruxelles 0459.866.904, care@verisure.be, Entreprise de gardiennage, de systèmes d’alarme et caméra agrée',
+  },
 }
 
 export type Dictionary = typeof fr
@@ -592,6 +610,22 @@ const nl: Dictionary = {
   desktop: {
     mobileOnly: 'Deze demo is ontworpen voor mobiel.',
     scan: 'Scan de QR-code om ze op uw telefoon te openen.',
+  },
+  demo: {
+    watermark: 'DEMO',
+    overline: 'Demonstratieomgeving',
+    title: 'Demo – Uitsluitend fictieve gegevens',
+    points: [
+      'Deze applicatie is een demonstratie- en opleidingsmodel.',
+      'Ze stelt geen echte klanteninstallatie voor.',
+      'Alle gegevens (personen, adressen, toestellen, gebeurtenissen) zijn gesimuleerd.',
+      'Er worden geen echte meldingen, SOS-oproepen of opdrachten verstuurd.',
+    ],
+    enter: 'DOORGAAN',
+    legalTitle: 'Wettelijke vermeldingen',
+    legalRow: ['Wettelijke vermeldingen', 'Demonstratieomgeving en bedrijfsinformatie'],
+    company:
+      'Verisure NV, Raketstraat 66, 1130 Brussel, RPR Brussel 0459.866.904, care@verisure.be, Vergunde bewakingsonderneming en onderneming voor alarm- en camerasystemen',
   },
 }
 
