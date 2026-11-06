@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useReducer, useRef, type ReactNode } from 'react'
 import { createSeed, CURRENT_USER, type AlarmMode, type EventType, type HistoryEvent, type SystemUser } from './seed'
+import type { Routine } from './routines'
 
 export type PendingAction = { kind: 'arm'; mode: Exclude<AlarmMode, 'off'> } | { kind: 'disarm' } | { kind: 'door'; lock: boolean }
 
@@ -8,6 +9,8 @@ export type Overlay = { kind: 'mode' } | { kind: 'pin'; action: PendingAction } 
 type State = ReturnType<typeof createSeed> & {
   overlay: Overlay
   pending: PendingAction | null
+  /** Routines créées pendant la session (aucune au départ). */
+  routines: Routine[]
 }
 
 type Action =
@@ -16,6 +19,8 @@ type Action =
   | { type: 'START'; action: PendingAction }
   | { type: 'COMMIT'; action: PendingAction; at: number }
   | { type: 'ADD_USER'; user: SystemUser }
+  | { type: 'ADD_ROUTINE'; routine: Routine }
+  | { type: 'TOGGLE_ROUTINE'; id: string }
 
 const PENDING_MS = 1500
 
@@ -46,6 +51,10 @@ function reducer(state: State, action: Action): State {
       const emergency = user.contactRoles.includes('emergencyContact')
       return { ...state, users: [user, ...state.users], emergencyContacts: state.emergencyContacts + (emergency ? 1 : 0) }
     }
+    case 'ADD_ROUTINE':
+      return { ...state, routines: [...state.routines, action.routine] }
+    case 'TOGGLE_ROUTINE':
+      return { ...state, routines: state.routines.map((r) => (r.id === action.id ? { ...r, enabled: !r.enabled } : r)) }
   }
 }
 
@@ -56,12 +65,15 @@ type DemoContext = State & {
   confirm: (action: PendingAction) => void
   /** Ajout en mémoire seulement : la liste revient au seed au rechargement. */
   addUser: (user: SystemUser) => void
+  /** Ajout en mémoire seulement, comme les utilisateurs. */
+  addRoutine: (routine: Routine) => void
+  toggleRoutine: (id: string) => void
 }
 
 const Ctx = createContext<DemoContext | null>(null)
 
 export function DemoProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, undefined, () => ({ ...createSeed(), overlay: null, pending: null }))
+  const [state, dispatch] = useReducer(reducer, undefined, () => ({ ...createSeed(), overlay: null, pending: null, routines: [] }))
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   const actions = useMemo(
@@ -75,6 +87,8 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         timer.current = setTimeout(() => dispatch({ type: 'COMMIT', action, at: Date.now() }), PENDING_MS)
       },
       addUser: (user: SystemUser) => dispatch({ type: 'ADD_USER', user }),
+      addRoutine: (routine: Routine) => dispatch({ type: 'ADD_ROUTINE', routine }),
+      toggleRoutine: (id: string) => dispatch({ type: 'TOGGLE_ROUTINE', id }),
     }),
     [],
   )

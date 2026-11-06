@@ -5,6 +5,7 @@ import { useDemo } from '../store/demoStore'
 import { useNow } from '../hooks/useNow'
 import { dayTimeLabel, relativeLabel } from '../lib/time'
 import { Card } from '../components/Card'
+import automationImage from '../assets/home-automation.jpg'
 import { StatusCircle } from '../components/StatusCircle'
 import { alarmVisual } from '../components/alarmVisual'
 import { Broadcast, DoorIcon } from '../components/icons/Shields'
@@ -30,6 +31,7 @@ export function Home() {
       <CompactHeader visible={compact} />
       <AlarmHeader now={now} sentinelRef={headerRef} />
       <LocksCard now={now} />
+      <AutomationCard />
       <FireCard />
       <GuardianCard />
       <DoorsWindowsCard now={now} />
@@ -105,6 +107,22 @@ function LocksCard({ now }: { now: number }) {
         </StatusCircle>
         <p className="mt-[8px] text-[16px] text-ink">{t.doorName}</p>
         <p className="mt-[2px] text-[15px] tracking-[0.03em] text-muted">{relativeLabel(door.at, now, t.time)}</p>
+      </div>
+    </Card>
+  )
+}
+
+/**
+ * Automatisation : ouvre Plus › Fonctionnalités › Routines.
+ * Illustration découpée telle quelle dans la capture de l'app d'origine ; la ligne
+ * « Prochaine routine planifiée » de l'original sera ajoutée plus tard.
+ */
+function AutomationCard() {
+  const { t } = useI18n()
+  return (
+    <Card title={t.home.automation} chevron to="/plus/fonctionnalites/routines">
+      <div className="flex justify-center pt-[6px] pb-[18px]">
+        <img src={automationImage} alt="" width={120} height={81} className="h-[81px] w-[120px]" />
       </div>
     </Card>
   )

@@ -17,6 +17,7 @@ import { Features } from './pages/Features'
 import { Routines } from './pages/Routines'
 import { SuggestedRoutines } from './pages/SuggestedRoutines'
 import { ReminderDetail, Reminders } from './pages/Reminders'
+import { CreateRoutine, RoutineActions, RoutineAlarmAction, RoutineDraft, RoutineLockAction, RoutineExactTime, RoutineTimeTriggers, RoutineTriggers } from './pages/CreateRoutine'
 import { Legal } from './pages/Legal'
 
 export const router = createBrowserRouter([
@@ -40,6 +41,19 @@ export const router = createBrowserRouter([
       { path: 'plus/fonctionnalites', element: <Features /> },
       { path: 'plus/fonctionnalites/routines', element: <Routines /> },
       { path: 'plus/fonctionnalites/routines/suggerees', element: <SuggestedRoutines /> },
+      {
+        path: 'plus/fonctionnalites/routines/nouvelle',
+        element: <RoutineDraft />,
+        children: [
+          { index: true, element: <CreateRoutine /> },
+          { path: 'quand', element: <RoutineTriggers /> },
+          { path: 'quand/moment', element: <RoutineTimeTriggers /> },
+          { path: 'quand/moment/precis', element: <RoutineExactTime /> },
+          { path: 'alors', element: <RoutineActions /> },
+          { path: 'alors/alarme', element: <RoutineAlarmAction /> },
+          { path: 'alors/verrouillage', element: <RoutineLockAction /> },
+        ],
+      },
       { path: 'plus/fonctionnalites/routines/rappel', element: <Reminders /> },
       { path: 'plus/fonctionnalites/routines/rappel/:kind', element: <ReminderDetail /> },
       { path: '*', element: <Navigate to="/" replace /> },
