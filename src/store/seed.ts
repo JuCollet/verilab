@@ -60,7 +60,10 @@ export function createSeed(now = Date.now()) {
 }
 
 /** Identifiants des caméras ; les noms affichés sont dans les dictionnaires (cameras.names). */
-export const CAMERAS = ['living', 'nightHall'] as const
+export const CAMERAS = ['living', 'kitchen', 'garden'] as const
+export type CameraId = (typeof CAMERAS)[number]
+/** Numéros de série fictifs des caméras (écran Paramètres caméra). */
+export const CAMERA_SERIALS: Record<CameraId, string> = { living: '2DAU 4KT7', kitchen: '2DAU 8MR3', garden: '2DAU 1VZ9' }
 
 export type SensorId = 'bathroom' | 'living' | 'livingLeft' | 'slidingDoor' | 'hall' | 'toilet'
 export type Sensor = { id: SensorId; serial: string; at: number }
