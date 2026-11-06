@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router'
 import { Settings, X } from 'lucide-react'
 import { CAMERAS, type CameraId } from '../store/seed'
+import { useDemo } from '../store/demoStore'
 import { useI18n } from '../i18n/I18nProvider'
 import { PageTitle } from '../components/PageTitle'
 // Image découpée telle quelle dans la capture de l'app d'origine (boutons Play et photo inclus).
@@ -54,26 +55,43 @@ function CameraCard({ id }: { id: CameraId }) {
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
   useEffect(() => () => clearTimeout(timer.current), [])
 
-  const open = () => {
+  const { takePhoto } = useDemo()
+
+  /** Ouvre la vue plein écran après la latence simulée ; avec `photo`, la prise est aussi notée dans l'Historique. */
+  const open = (photo: boolean) => {
     if (loading) return
     setLoading(true)
-    timer.current = setTimeout(() => navigate(`/cameras/${id}`), CONNECT_MS)
+    timer.current = setTimeout(() => {
+      if (photo) takePhoto(id)
+      navigate(`/cameras/${id}`)
+    }, CONNECT_MS)
   }
 
   const preview = <img src={cameraCard} alt="" draggable={false} className="block aspect-[833/420] w-full" />
   return (
     <section className="mx-[7px] mb-[7px] overflow-hidden rounded-[7px] bg-card shadow-card">
       {CAMERA_IMAGES[id] ? (
-        <button type="button" onClick={open} aria-label={t.cameras.open(name)} aria-busy={loading} className="relative block w-full">
-          {preview}
+        <div className="relative">
+          <button type="button" onClick={() => open(false)} aria-label={t.cameras.open(name)} aria-busy={loading} className="block w-full">
+            {preview}
+          </button>
           {/* Anneau de chargement centré sur l'icône appareil photo de l'image (≈ 50 % / 83 % de la tuile). */}
           {loading && (
             <span
               aria-hidden
-              className="absolute top-[83%] left-1/2 aspect-square w-[15.5%] -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full border-[3px] border-white/30 border-t-white"
+              className="pointer-events-none absolute top-[83%] left-1/2 aspect-square w-[15.5%] -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full border-[3px] border-white/30 border-t-white"
             />
           )}
-        </button>
+          {/* Zone tactile posée sur l'icône appareil photo de l'image : prend une photo (événement « Nouvelles photos »
+              dans l'Historique) et l'affiche en plein écran, après le même chargement. */}
+          <button
+            type="button"
+            onClick={() => open(true)}
+            disabled={loading}
+            aria-label={t.cameras.takePhoto(name)}
+            className="absolute top-[83%] left-1/2 aspect-square w-[15.5%] -translate-x-1/2 -translate-y-1/2 rounded-full active:bg-white/20"
+          />
+        </div>
       ) : (
         preview
       )}

@@ -7,6 +7,7 @@ const variants = {
   red: 'bg-brand text-white shadow-round',
   green: 'bg-success text-white',
   yellow: 'bg-warning text-white',
+  gray: 'bg-[#6e6e6e] text-white',
 }
 
 export type CircleVariant = keyof typeof variants

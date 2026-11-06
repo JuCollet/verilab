@@ -14,6 +14,8 @@ export type EventType =
   | 'unlocked'
   | 'battery'
   | 'lock_failure'
+  /** Photo prise depuis l'écran Caméras ; `by` contient alors l'identifiant de la caméra. */
+  | 'photo'
 
 export type HistoryEvent = { id: string; type: EventType; at: number; by: string }
 

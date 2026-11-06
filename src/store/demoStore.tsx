@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useReducer, useRef, type ReactNode } from 'react'
-import { createSeed, CURRENT_USER, HOME_TILES, type AlarmMode, type EventType, type HistoryEvent, type HomeLayout, type SensorId, type SystemUser } from './seed'
+import { createSeed, CURRENT_USER, HOME_TILES, type AlarmMode, type EventType, type HistoryEvent, type CameraId, type HomeLayout, type SensorId, type SystemUser } from './seed'
 import type { Routine } from './routines'
 
 export type PendingAction = { kind: 'arm'; mode: Exclude<AlarmMode, 'off'> } | { kind: 'disarm' } | { kind: 'door'; lock: boolean }
@@ -27,6 +27,7 @@ type Action =
   | { type: 'TOGGLE_ROUTINE'; id: string }
   | { type: 'SET_HOME_LAYOUT'; layout: HomeLayout }
   | { type: 'RENAME_SENSOR'; id: SensorId; name: string }
+  | { type: 'TAKE_PHOTO'; camera: CameraId; at: number }
 
 const PENDING_MS = 1500
 
@@ -52,6 +53,10 @@ function reducer(state: State, action: Action): State {
       else next.alarm = { mode: done.kind === 'arm' ? done.mode : 'off', at, by: CURRENT_USER }
       return next
     }
+    case 'TAKE_PHOTO': {
+      const event: HistoryEvent = { id: `photo-${action.at}`, type: 'photo', at: action.at, by: action.camera }
+      return { ...state, events: [event, ...state.events] }
+    }
     case 'RENAME_SENSOR':
       return { ...state, sensorNames: { ...state.sensorNames, [action.id]: action.name } }
     case 'ADD_USER': {
@@ -75,6 +80,8 @@ type DemoContext = State & {
   confirm: (action: PendingAction) => void
   /** Ajout en mémoire seulement : la liste revient au seed au rechargement. */
   addUser: (user: SystemUser) => void
+  /** Photo manuelle depuis une caméra : ajoute l'événement à l'historique. */
+  takePhoto: (camera: CameraId) => void
   /** Ajout en mémoire seulement, comme les utilisateurs. */
   addRoutine: (routine: Routine) => void
   toggleRoutine: (id: string) => void
@@ -108,6 +115,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         timer.current = setTimeout(() => dispatch({ type: 'COMMIT', action, at: Date.now() }), PENDING_MS)
       },
       addUser: (user: SystemUser) => dispatch({ type: 'ADD_USER', user }),
+      takePhoto: (camera: CameraId) => dispatch({ type: 'TAKE_PHOTO', camera, at: Date.now() }),
       addRoutine: (routine: Routine) => dispatch({ type: 'ADD_ROUTINE', routine }),
       toggleRoutine: (id: string) => dispatch({ type: 'TOGGLE_ROUTINE', id }),
       setHomeLayout: (layout: HomeLayout) => dispatch({ type: 'SET_HOME_LAYOUT', layout }),

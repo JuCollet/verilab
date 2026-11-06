@@ -83,6 +83,7 @@ const fr = {
       serial: 'N° de série',
     },
     names: { living: 'salon', kitchen: 'cuisine', garden: 'jardin' },
+    takePhoto: (name: string) => `Prendre une photo : ${name}`,
     open: (name: string) => `Afficher la caméra ${name}`,
     close: 'Fermer la caméra',
   },
@@ -98,7 +99,10 @@ const fr = {
       unlocked: (door) => `Déverrouillé ${door}`,
       battery: () => 'Batterie rétablie',
       lock_failure: () => 'Echec du déverrouillage du LockGuard',
+      photo: () => 'Nouvelles photos prises par vous disponibles',
     } satisfies Record<EventType, (door: string) => string>,
+    /** Sous-titre d'une photo, selon la caméra. */
+    photoSubtitle: { living: 'Caméra en salon', kitchen: 'Caméra en cuisine', garden: 'Caméra extérieure en jardin' },
   },
   sos: {
     twoSteps: 'Deux étapes pour envoyer un SOS',
@@ -514,6 +518,7 @@ const nl: Dictionary = {
       serial: 'Serienummer',
     },
     names: { living: 'woonkamer', kitchen: 'keuken', garden: 'tuin' },
+    takePhoto: (name) => `Foto nemen: ${name}`,
     open: (name) => `Camera ${name} tonen`,
     close: 'Camera sluiten',
   },
@@ -529,7 +534,9 @@ const nl: Dictionary = {
       unlocked: (door) => `${capitalize(door)} ontgrendeld`,
       battery: () => 'Batterij hersteld',
       lock_failure: () => 'Ontgrendeling van de LockGuard mislukt',
+      photo: () => 'Nieuwe foto’s door u genomen beschikbaar',
     },
+    photoSubtitle: { living: 'Camera in woonkamer', kitchen: 'Camera in keuken', garden: 'Buitencamera in tuin' },
   },
   sos: {
     twoSteps: 'Twee stappen om een SOS te versturen',

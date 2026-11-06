@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
-import { LockKeyhole, LockKeyholeOpen, TriangleAlert, Wrench } from 'lucide-react'
+import { LockKeyhole, LockKeyholeOpen, RectangleEllipsis, TriangleAlert, Wrench } from 'lucide-react'
 import { useDemo } from '../store/demoStore'
-import type { EventType, HistoryEvent } from '../store/seed'
+import type { CameraId, EventType, HistoryEvent } from '../store/seed'
 import { useI18n } from '../i18n/I18nProvider'
 import { useNow } from '../hooks/useNow'
 import { clock, groupByDay } from '../lib/time'
@@ -18,6 +18,7 @@ const EVENT_META: Record<EventType, { variant: CircleVariant; icon: ReactNode }>
   unlocked: { variant: 'green', icon: <LockKeyholeOpen size={16} strokeWidth={2} /> },
   battery: { variant: 'yellow', icon: <Wrench size={16} strokeWidth={2} /> },
   lock_failure: { variant: 'yellow', icon: <TriangleAlert size={16} strokeWidth={2} /> },
+  photo: { variant: 'gray', icon: <RectangleEllipsis size={17} strokeWidth={1.8} /> },
 }
 
 export function History() {
@@ -56,7 +57,12 @@ function EventRow({ event, last }: { event: HistoryEvent; last: boolean }) {
   const { t } = useI18n()
   const meta = EVENT_META[event.type]
   const title = t.history.events[event.type](t.doorName)
-  const subtitle = event.type === 'battery' ? t.history.batterySubtitle(t.doorName) : event.by
+  const subtitle =
+    event.type === 'battery'
+      ? t.history.batterySubtitle(t.doorName)
+      : event.type === 'photo'
+        ? t.history.photoSubtitle[event.by as CameraId]
+        : event.by
   return (
     <li className="relative flex pr-[14px] pb-[13px] pl-[13px]">
       {!last && <span className="absolute top-[30px] bottom-0 left-[59px] w-[1.5px] bg-[#b5b5b5]" />}
