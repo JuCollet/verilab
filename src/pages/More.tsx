@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
-import { ChevronRight, Newspaper, ShoppingCart, SlidersVertical, Trophy, Users } from 'lucide-react'
+import { ChevronRight, Info, Newspaper, ShoppingCart, SlidersVertical, Trophy, Users } from 'lucide-react'
 import { useI18n } from '../i18n/I18nProvider'
 import type { Dictionary } from '../i18n/dictionaries'
 import { CURRENT_USER } from '../store/seed'
@@ -25,6 +25,7 @@ export function More() {
   const rows = [
     { content: t.more.account, icon: <Users size={24} strokeWidth={1.5} />, to: '/plus/compte' },
     { content: t.more.system, icon: <SlidersVertical size={24} strokeWidth={1.5} /> },
+    { content: t.demo.legalRow, icon: <Info size={24} strokeWidth={1.5} />, to: '/plus/mentions-legales' },
   ]
   return (
     <div className="flex min-h-full flex-col px-[7px] pb-[14px]">

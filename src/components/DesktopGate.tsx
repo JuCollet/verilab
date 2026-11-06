@@ -31,6 +31,10 @@ function DesktopPage() {
         <QRCodeSVG value={window.location.href} size={196} fgColor="#2b2b2b" />
       </div>
       <p className="text-[13px] text-muted">{window.location.host}</p>
+      <div className="max-w-md">
+        <p className="text-[15px] font-semibold text-ink">{t.demo.title}</p>
+        <p className="mt-2 text-[12px] leading-[17px] text-muted">{t.demo.company}</p>
+      </div>
     </main>
   )
 }

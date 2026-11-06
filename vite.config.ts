@@ -15,9 +15,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: 'Verilab',
-        short_name: 'Verilab',
-        description: 'Démo de l’application Verilab',
+        name: 'Verilab – Démo (données fictives)',
+        short_name: 'Verilab Démo',
+        description: 'Environnement de démonstration et de formation, données fictives uniquement',
         lang: 'fr',
         display: 'standalone',
         orientation: 'portrait',

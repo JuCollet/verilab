@@ -8,6 +8,7 @@ import '@fontsource/fira-sans/600.css'
 import './index.css'
 import { router } from './router'
 import { DesktopGate } from './components/DesktopGate'
+import { DemoWatermark, DemoWelcome } from './components/DemoMarks'
 import { DemoProvider } from './store/demoStore'
 import { I18nProvider } from './i18n/I18nProvider'
 
@@ -19,7 +20,9 @@ createRoot(document.getElementById('root')!).render(
       <DemoProvider>
         <DesktopGate>
           <RouterProvider router={router} />
+          <DemoWelcome />
         </DesktopGate>
+        <DemoWatermark />
       </DemoProvider>
     </I18nProvider>
   </StrictMode>,

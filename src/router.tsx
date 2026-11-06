@@ -17,6 +17,7 @@ import { Features } from './pages/Features'
 import { Routines } from './pages/Routines'
 import { SuggestedRoutines } from './pages/SuggestedRoutines'
 import { ReminderDetail, Reminders } from './pages/Reminders'
+import { Legal } from './pages/Legal'
 
 export const router = createBrowserRouter([
   { path: '/sos', element: <Sos /> },
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
       { path: 'support/guides-video', element: <VideoGuides /> },
       { path: 'plus', element: <More /> },
       { path: 'plus/compte', element: <Account /> },
+      { path: 'plus/mentions-legales', element: <Legal /> },
       { path: 'plus/utilisateurs', element: <Users /> },
       { path: 'plus/fonctionnalites', element: <Features /> },
       { path: 'plus/fonctionnalites/routines', element: <Routines /> },
