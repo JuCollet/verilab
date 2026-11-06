@@ -1,7 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 import { AppShell } from './components/AppShell'
 import { Home } from './pages/Home'
-import { Cameras } from './pages/Cameras'
+import { CameraView, Cameras } from './pages/Cameras'
+import { Gallery } from './pages/Gallery'
+import { CameraSettings } from './pages/CameraSettings'
 import { History } from './pages/History'
 import { Sos } from './pages/Sos'
 import { SosTimer } from './pages/SosTimer'
@@ -21,6 +23,7 @@ import { Legal } from './pages/Legal'
 
 export const router = createBrowserRouter([
   { path: '/sos', element: <Sos /> },
+  { path: '/cameras/:id', element: <CameraView /> },
   { path: '/sos-timer', element: <SosTimer /> },
   { path: '/plus/utilisateurs/ajouter', element: <AddUser /> },
   {
@@ -28,6 +31,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'cameras', element: <Cameras /> },
+      { path: 'cameras/galerie', element: <Gallery /> },
+      { path: 'cameras/:id/parametres', element: <CameraSettings /> },
       { path: 'historique', element: <History /> },
       { path: 'portes-fenetres', element: <DoorsWindows /> },
       { path: 'climat', element: <Climate /> },
