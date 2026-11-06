@@ -141,3 +141,8 @@ export const EMERGENCY_CONTACTS_COUNT = 6
 
 /** Routines suggérées (Plus › Fonctionnalités › Routines) ; textes dans les dictionnaires (routines.suggestions). */
 export const SUGGESTED_ROUTINES = ['goodNight', 'goodMorning'] as const
+
+/** Tuiles de l'Accueil, dans l'ordre par défaut (réarrangeables via « Réarranger »). */
+export const HOME_TILES = ['locks', 'automation', 'fire', 'guardian', 'doorsWindows', 'climate'] as const
+export type HomeTile = (typeof HOME_TILES)[number]
+export type HomeLayout = { order: HomeTile[]; hidden: HomeTile[] }
