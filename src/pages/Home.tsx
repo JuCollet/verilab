@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type Ref } from 'react'
+import { useEffect, useRef, useState, type ReactNode, type Ref } from 'react'
 import { Link } from 'react-router'
-import { Bell, LockKeyhole, LockKeyholeOpen } from 'lucide-react'
+import { ArrowDownUp, Bell, LockKeyhole, LockKeyholeOpen } from 'lucide-react'
+import type { HomeTile } from '../store/seed'
 import { useDemo } from '../store/demoStore'
 import { useNow } from '../hooks/useNow'
 import { dayTimeLabel, relativeLabel } from '../lib/time'
@@ -15,6 +16,16 @@ import { LanguageToggle } from '../components/LanguageToggle'
 
 export function Home() {
   const now = useNow()
+  const { homeLayout } = useDemo()
+  /** Tuiles de l'Accueil ; leur ordre et leur visibilité viennent de l'écran « Réarranger ». */
+  const tiles: Record<HomeTile, ReactNode> = {
+    locks: <LocksCard now={now} />,
+    automation: <AutomationCard />,
+    fire: <FireCard />,
+    guardian: <GuardianCard />,
+    doorsWindows: <DoorsWindowsCard now={now} />,
+    climate: <ClimateCard now={now} />,
+  }
   const headerRef = useRef<HTMLDivElement>(null)
   const [compact, setCompact] = useState(false)
 
@@ -30,14 +41,27 @@ export function Home() {
     <>
       <CompactHeader visible={compact} />
       <AlarmHeader now={now} sentinelRef={headerRef} />
-      <LocksCard now={now} />
-      <AutomationCard />
-      <FireCard />
-      <GuardianCard />
-      <DoorsWindowsCard now={now} />
-      <ClimateCard now={now} />
+      {homeLayout.order
+        .filter((tile) => !homeLayout.hidden.includes(tile))
+        .map((tile) => (
+          <div key={tile}>{tiles[tile]}</div>
+        ))}
+      <RearrangeButton />
       <div className="h-[1px]" />
     </>
+  )
+}
+
+/** Bouton rond en bas de l'Accueil : ouvre « Réarranger ». */
+function RearrangeButton() {
+  const { t } = useI18n()
+  return (
+    <Link to="/reorganiser" className="mx-auto mt-[17px] mb-[16px] flex w-fit flex-col items-center gap-[4px] active:opacity-70">
+      <span className="flex h-[47px] w-[47px] items-center justify-center rounded-full bg-[#e2e2e2] text-ink">
+        <ArrowDownUp size={22} strokeWidth={1.6} />
+      </span>
+      <span className="text-[16px] text-ink">{t.rearrange.button}</span>
+    </Link>
   )
 }
 

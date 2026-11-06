@@ -3,7 +3,7 @@ import { CircleHelp, Ellipsis, House } from 'lucide-react'
 import { useI18n } from '../i18n/I18nProvider'
 
 /** Routes affichées sous l'onglet Accueil. */
-const HOME_PATHS = ['/', '/portes-fenetres', '/climat']
+const HOME_PATHS = ['/', '/portes-fenetres', '/climat', '/reorganiser']
 
 function HomeTabIcon({ active }: { active: boolean }) {
   if (!active) return <House size={22} strokeWidth={1.6} />

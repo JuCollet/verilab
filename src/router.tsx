@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 import { AppShell } from './components/AppShell'
 import { Home } from './pages/Home'
+import { Rearrange } from './pages/Rearrange'
 import { Cameras } from './pages/Cameras'
 import { History } from './pages/History'
 import { Sos } from './pages/Sos'
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
     element: <AppShell />,
     children: [
       { index: true, element: <Home /> },
+      { path: 'reorganiser', element: <Rearrange /> },
       { path: 'cameras', element: <Cameras /> },
       { path: 'historique', element: <History /> },
       { path: 'portes-fenetres', element: <DoorsWindows /> },
