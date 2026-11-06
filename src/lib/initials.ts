@@ -1,4 +1,4 @@
-/** « User 1 » → « U1 ». */
+/** « Thomas Peeters » → « TP ». */
 export const initials = (name: string) =>
   name
     .split(' ')
