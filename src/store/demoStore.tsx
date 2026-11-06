@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useReducer, useRef, type ReactNode } from 'react'
-import { createSeed, CURRENT_USER, HOME_TILES, type AlarmMode, type EventType, type HistoryEvent, type HomeLayout, type SystemUser } from './seed'
+import { createSeed, CURRENT_USER, HOME_TILES, type AlarmMode, type EventType, type HistoryEvent, type HomeLayout, type SensorId, type SystemUser } from './seed'
 import type { Routine } from './routines'
 
 export type PendingAction = { kind: 'arm'; mode: Exclude<AlarmMode, 'off'> } | { kind: 'disarm' } | { kind: 'door'; lock: boolean }
@@ -13,6 +13,8 @@ type State = ReturnType<typeof createSeed> & {
   routines: Routine[]
   /** Ordre et tuiles cachées de l'Accueil (écran « Réarranger »). */
   homeLayout: HomeLayout
+  /** Noms personnalisés des capteurs (sinon le nom traduit par défaut). */
+  sensorNames: Partial<Record<SensorId, string>>
 }
 
 type Action =
@@ -24,6 +26,7 @@ type Action =
   | { type: 'ADD_ROUTINE'; routine: Routine }
   | { type: 'TOGGLE_ROUTINE'; id: string }
   | { type: 'SET_HOME_LAYOUT'; layout: HomeLayout }
+  | { type: 'RENAME_SENSOR'; id: SensorId; name: string }
 
 const PENDING_MS = 1500
 
@@ -49,6 +52,8 @@ function reducer(state: State, action: Action): State {
       else next.alarm = { mode: done.kind === 'arm' ? done.mode : 'off', at, by: CURRENT_USER }
       return next
     }
+    case 'RENAME_SENSOR':
+      return { ...state, sensorNames: { ...state.sensorNames, [action.id]: action.name } }
     case 'ADD_USER': {
       const { user } = action
       const emergency = user.contactRoles.includes('emergencyContact')
@@ -75,12 +80,21 @@ type DemoContext = State & {
   toggleRoutine: (id: string) => void
   /** En mémoire seulement : l'Accueil revient à l'ordre par défaut au rechargement. */
   setHomeLayout: (layout: HomeLayout) => void
+  /** En mémoire seulement, comme les utilisateurs. */
+  renameSensor: (id: SensorId, name: string) => void
 }
 
 const Ctx = createContext<DemoContext | null>(null)
 
 export function DemoProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, undefined, () => ({ ...createSeed(), overlay: null, pending: null, routines: [], homeLayout: { order: [...HOME_TILES], hidden: [] } }))
+  const [state, dispatch] = useReducer(reducer, undefined, () => ({
+    ...createSeed(),
+    overlay: null,
+    pending: null,
+    routines: [],
+    homeLayout: { order: [...HOME_TILES], hidden: [] },
+    sensorNames: {},
+  }))
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   const actions = useMemo(
@@ -97,6 +111,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       addRoutine: (routine: Routine) => dispatch({ type: 'ADD_ROUTINE', routine }),
       toggleRoutine: (id: string) => dispatch({ type: 'TOGGLE_ROUTINE', id }),
       setHomeLayout: (layout: HomeLayout) => dispatch({ type: 'SET_HOME_LAYOUT', layout }),
+      renameSensor: (id: SensorId, name: string) => dispatch({ type: 'RENAME_SENSOR', id, name }),
     }),
     [],
   )

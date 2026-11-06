@@ -135,6 +135,8 @@ const fr = {
   doorsWindows: {
     serial: 'N° de série',
     closed: 'Fermé',
+    edit: (name: string) => `Modifier le nom : ${name}`,
+    rename: { title: 'Emplacement', label: 'Nom', clear: 'Effacer', save: 'ENREGISTRER' },
     sensors: {
       bathroom: 'Fenêtre salle de bain',
       living: 'Fenêtre salon',
@@ -564,6 +566,8 @@ const nl: Dictionary = {
   doorsWindows: {
     serial: 'Serienummer',
     closed: 'Gesloten',
+    edit: (name) => `Naam wijzigen: ${name}`,
+    rename: { title: 'Locatie', label: 'Naam', clear: 'Wissen', save: 'OPSLAAN' },
     sensors: {
       bathroom: 'Raam badkamer',
       living: 'Raam woonkamer',
